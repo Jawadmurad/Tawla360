@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tawla.360.API", "Tawla.360.API\Tawla.360.API.csproj", "{5B47F882-493C-4E56-8A6A-381E1906AFD4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tawla.360.Application", "Tawla.360.Application\Tawla.360.Application.csproj", "{2137EAE6-6921-43C4-84C8-892916483EEF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tawla.360.Domain", "Tawla.360.Domain\Tawla.360.Domain.csproj", "{BE33B081-DF32-43B7-AEAF-DB9ADDFDEA2E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tawla.360.Infrastructure", "Tawla.360.Infrastructure\Tawla.360.Infrastructure.csproj", "{08A87D77-4F2A-46AB-AF07-7EDA9C566469}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tawla.360.Persistence", "Tawla.360.Persistence\Tawla.360.Persistence.csproj", "{C9579C6E-7566-4750-8EC1-04309B5DA94A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B47F882-493C-4E56-8A6A-381E1906AFD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5B47F882-493C-4E56-8A6A-381E1906AFD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5B47F882-493C-4E56-8A6A-381E1906AFD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5B47F882-493C-4E56-8A6A-381E1906AFD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2137EAE6-6921-43C4-84C8-892916483EEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2137EAE6-6921-43C4-84C8-892916483EEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2137EAE6-6921-43C4-84C8-892916483EEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2137EAE6-6921-43C4-84C8-892916483EEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BE33B081-DF32-43B7-AEAF-DB9ADDFDEA2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE33B081-DF32-43B7-AEAF-DB9ADDFDEA2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE33B081-DF32-43B7-AEAF-DB9ADDFDEA2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE33B081-DF32-43B7-AEAF-DB9ADDFDEA2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08A87D77-4F2A-46AB-AF07-7EDA9C566469}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08A87D77-4F2A-46AB-AF07-7EDA9C566469}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08A87D77-4F2A-46AB-AF07-7EDA9C566469}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08A87D77-4F2A-46AB-AF07-7EDA9C566469}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9579C6E-7566-4750-8EC1-04309B5DA94A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9579C6E-7566-4750-8EC1-04309B5DA94A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9579C6E-7566-4750-8EC1-04309B5DA94A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9579C6E-7566-4750-8EC1-04309B5DA94A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

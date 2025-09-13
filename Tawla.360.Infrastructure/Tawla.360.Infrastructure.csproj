@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\Tawla.360.Application\Tawla.360.Application.csproj" />
+    <ProjectReference Include="..\Tawla.360.Domain\Tawla.360.Domain.csproj" />
+    <ProjectReference Include="..\Tawla.360.Persistence\Tawla.360.Persistence.csproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <RootNamespace>Tawla._360.Infrastructure</RootNamespace>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>
