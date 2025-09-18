@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tawla.360.Infrastructure", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tawla.360.Persistence", "Tawla.360.Persistence\Tawla.360.Persistence.csproj", "{C9579C6E-7566-4750-8EC1-04309B5DA94A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tawla.360.Shared", "Tawla.360.Shared\Tawla.360.Shared.csproj", "{9817A184-7531-4301-B574-FEB59E3B08CB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{C9579C6E-7566-4750-8EC1-04309B5DA94A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9579C6E-7566-4750-8EC1-04309B5DA94A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9579C6E-7566-4750-8EC1-04309B5DA94A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9817A184-7531-4301-B574-FEB59E3B08CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9817A184-7531-4301-B574-FEB59E3B08CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9817A184-7531-4301-B574-FEB59E3B08CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9817A184-7531-4301-B574-FEB59E3B08CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
