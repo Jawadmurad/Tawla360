@@ -482,3 +482,7 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+
+.vscode
+Tawla.360.API/appsettings.Development.json

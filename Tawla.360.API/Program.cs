@@ -1,8 +1,13 @@
+using Tawla._360.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
+var services = builder.Services;
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+services.AddOpenApi();
+services.RegisterInfrastructure(builder.Configuration);
+
 
 var app = builder.Build();
 
