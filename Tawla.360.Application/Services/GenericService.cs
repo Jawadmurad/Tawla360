@@ -38,7 +38,6 @@ public class GenericService<TEntity, TCreate, TUpdate, TList, TDetails, TLite> :
     {
         return _repository.Select(projection, filter);
     }
-
     public virtual async Task<TDetails> CreateAsync(TCreate createDto)
     {
         var entity = _mapper.Map<TEntity>(createDto);

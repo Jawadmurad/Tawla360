@@ -7,5 +7,5 @@ public class Restaurant : BaseNamedEntity
 {
     public string Description { get; set; }
     public string Logo { get; set; }
-    public bool IsActive { get; set; }
+    public virtual ICollection<Branch> Branches { get; set; }
 }

@@ -18,6 +18,7 @@ public static class DependencyInjection
     {
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped(typeof(IHasIdRepository<>), typeof(HasIdRepository<>));
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
         // services.AddScoped(TypeLoadException)
         return services;
     }
