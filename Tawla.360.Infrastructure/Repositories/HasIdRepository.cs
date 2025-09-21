@@ -1,12 +1,12 @@
-using System;
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Tawla._360.Domain.Interfaces.Entities;
 using Tawla._360.Domain.Repositories;
+using Tawla._360.Persistence.DbContexts;
 
 namespace Tawla._360.Infrastructure.Repositories;
 
-public class HasIdRepository<T>(DbContext context) : Repository<T>(context), IHasIdRepository<T> where T : class, IHasId, new()
+public class HasIdRepository<T>(ApplicationDbContext context) : Repository<T>(context), IHasIdRepository<T> where T : class, IHasId, new()
 {
     public ValueTask<T> Find(Guid id)
     {

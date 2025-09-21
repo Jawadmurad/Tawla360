@@ -13,7 +13,6 @@
     <TargetFramework>net9.0</TargetFramework>
     <RootNamespace>Tawla._360.Application</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
 
 </Project>

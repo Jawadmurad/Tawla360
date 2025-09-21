@@ -2,11 +2,12 @@ using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using Tawla._360.Domain.Repositories;
 using Tawla._360.Infrastructure.Extensions;
+using Tawla._360.Persistence.DbContexts;
 using Tawla._360.Shared;
 
 namespace Tawla._360.Infrastructure.Repositories;
 
-public class Repository<T>(DbContext context) : IRepository<T> where T : class, new()
+public class Repository<T>(ApplicationDbContext context) : IRepository<T> where T : class, new()
 {
     protected readonly DbContext _context = context;
     protected readonly DbSet<T> _dbSet = context.Set<T>();
