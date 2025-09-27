@@ -486,3 +486,4 @@ $RECYCLE.BIN/
 
 .vscode
 Tawla.360.API/appsettings.Development.json
+Tawla.360.API/wwwroot/uploads

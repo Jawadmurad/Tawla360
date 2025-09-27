@@ -1,8 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="../Tawla.360.Application/Tawla.360.Application.csproj" />
+    <ProjectReference Include="../Tawla.360.Shared/Tawla.360.Shared.csproj" />
     <ProjectReference Include="..\Tawla.360.Domain\Tawla.360.Domain.csproj" />
     <ProjectReference Include="..\Tawla.360.Persistence\Tawla.360.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.4" />
   </ItemGroup>
 
   <PropertyGroup>

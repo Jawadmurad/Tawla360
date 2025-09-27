@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Tawla._360.Application.Services;
 using Tawla._360.Domain.Repositories;
 using Tawla._360.Infrastructure.Repositories;
+using Tawla._360.Infrastructure.Services;
 using Tawla._360.Persistence;
 
 namespace Tawla._360.Infrastructure;
@@ -19,7 +22,8 @@ public static class DependencyInjection
         services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
         services.AddScoped(typeof(IHasIdRepository<>), typeof(HasIdRepository<>));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
-        // services.AddScoped(TypeLoadException)
+        services.AddScoped<IFileStorageService, FileStorageService>();
+        services.AddTransient<IEmailSender, SmtpEmailSender>();        
         return services;
     }
 }
