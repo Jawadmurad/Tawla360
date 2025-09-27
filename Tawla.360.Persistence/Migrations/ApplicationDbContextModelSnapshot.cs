@@ -165,6 +165,9 @@ namespace Tawla._360.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<TimeOnly>("CloseTime")
+                        .HasColumnType("time without time zone");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
@@ -173,6 +176,9 @@ namespace Tawla._360.Persistence.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("Logo")
                         .HasColumnType("text");
@@ -185,6 +191,9 @@ namespace Tawla._360.Persistence.Migrations
 
                     b.Property<string>("Name")
                         .HasColumnType("text");
+
+                    b.Property<int>("NumberOfBranches")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -212,11 +221,16 @@ namespace Tawla._360.Persistence.Migrations
                     b.PrimitiveCollection<string[]>("Permissions")
                         .HasColumnType("text[]");
 
+                    b.Property<Guid?>("RestaurantId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NormalizedName")
                         .IsUnique()
                         .HasDatabaseName("RoleNameIndex");
+
+                    b.HasIndex("RestaurantId");
 
                     b.ToTable("AspNetRoles", (string)null);
                 });
@@ -240,6 +254,12 @@ namespace Tawla._360.Persistence.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("text");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
@@ -288,6 +308,8 @@ namespace Tawla._360.Persistence.Migrations
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex");
+
+                    b.HasIndex("RestaurantId");
 
                     b.ToTable("AspNetUsers", (string)null);
                 });
@@ -350,6 +372,24 @@ namespace Tawla._360.Persistence.Migrations
                         .HasForeignKey("RestaurantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.UsersEntities.ApplicationRole", b =>
+                {
+                    b.HasOne("Tawla._360.Domain.Entities.RestaurantEntities.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId");
+
+                    b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.UsersEntities.ApplicationUser", b =>
+                {
+                    b.HasOne("Tawla._360.Domain.Entities.RestaurantEntities.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId");
 
                     b.Navigation("Restaurant");
                 });
