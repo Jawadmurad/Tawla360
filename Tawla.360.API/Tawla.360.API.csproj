@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../Tawla.360.Logging/Tawla.360.Logging.csproj" />
     <ProjectReference Include="..\Tawla.360.Application\Tawla.360.Application.csproj" />
     <ProjectReference Include="..\Tawla.360.Infrastructure\Tawla.360.Infrastructure.csproj" />
   </ItemGroup>
