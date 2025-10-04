@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Tawla._360.Application.Common.Dtos.QueryRequestDtos;
 using Tawla._360.Application.RestaurantUseCases.Commands;
 using Tawla._360.Application.RestaurantUseCases.Dtos.CreateRestaurantDtos;
 using Tawla._360.Application.RestaurantUseCases.Queries;
@@ -12,13 +13,9 @@ namespace Tawla._360.API;
 public class RestaurantController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly IEmailSender _emailSender;
-    private readonly ILogger<RestaurantController> _logger;
-    public RestaurantController(IMediator mediator, IEmailSender emailSender, ILogger<RestaurantController> logger)
+    public RestaurantController(IMediator mediator)
     {
-        _emailSender = emailSender;
         _mediator = mediator;
-        _logger = logger;
     }
     [HttpPost]
     public async Task<IActionResult> Create([FromForm] CreateRestaurantWithAdmin createRestaurantWith)
@@ -26,10 +23,20 @@ public class RestaurantController : ControllerBase
         await _mediator.Publish(new CreateRestaurantCommand(createRestaurantWith));
         return Ok();
     }
+    [HttpPost]
+    public async Task<IActionResult> GetPaged(QueryRequestDto query)
+    {
+        return Ok(await _mediator.Send(new GetRestaurantPagedQuery(query)));
+    }
     [HttpGet("Lite")]
-
     public async Task<IActionResult> Lite()
     {
         return Ok(await _mediator.Send(new GetAllRestaurantLiteQuery()));
+    }
+    [HttpDelete("{id:guid}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        await _mediator.Publish(new DeleteRestaurantCommand(id));
+        return Ok();
     }
 }
