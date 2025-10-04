@@ -1,4 +1,6 @@
 using System.Linq.Expressions;
+using Tawla._360.Application.Common.Dtos.QueryRequestDtos;
+using Tawla._360.Shared;
 
 namespace Tawla._360.Application.Common.ServicesInterfaces;
 
@@ -10,6 +12,7 @@ public interface IGenericService<TEntity, TCreate, TUpdate, TList, TDetails, TLi
     where TDetails : class
     where TLite : class
 {
+    Task<PagingResult<TList>> GetPagedAsync(QueryRequestDto query);
     Task<IReadOnlyList<TList>> GetAllAsync();
 
     Task<IReadOnlyList<TLite>> GetLiteAsync(Expression<Func<TEntity, bool>> filter = null);

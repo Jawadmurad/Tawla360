@@ -1,5 +1,8 @@
+using System.Drawing.Printing;
 using System.Linq.Expressions;
 using AutoMapper;
+using Tawla._360.Application.Common.Dtos.QueryRequestDtos;
+using Tawla._360.Application.Common.Extensions;
 using Tawla._360.Application.Common.ServicesInterfaces;
 using Tawla._360.Domain.Repositories;
 using Tawla._360.Shared;
@@ -44,8 +47,18 @@ public class GenericService<TEntity, TCreate, TUpdate, TList, TDetails, TLite> :
         await _repository.AddAsync(entity);
         return _mapper.Map<TDetails>(entity);
     }
-
-
+    public async Task<PagingResult<TList>> GetPagedAsync(QueryRequestDto query)
+    {
+        var filter = query.FilterGroup.BuildFilter<TEntity>();
+        var orderBy = query.Sort.BuildSorting<TEntity>();
+        var pagedResult = await _repository.GetPagedAsync(query.Paging.PageNumber, query.Paging.PageSize, filter, orderBy);
+        var mappedItems = _mapper.Map<List<TList>>(pagedResult.Data);
+        return new PagingResult<TList>()
+        {
+            Data = mappedItems,
+            Count = pagedResult.Count
+        };
+    }
     public async Task<PagingResult<TList>> GetPagedAsync(int pageNumber, int pageSize, Expression<Func<TEntity, bool>> filter = null)
     {
         var pagedResult = await _repository.GetPagedAsync(pageNumber, pageSize, filter);
