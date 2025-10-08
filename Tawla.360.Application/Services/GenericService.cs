@@ -26,13 +26,13 @@ public class GenericService<TEntity, TCreate, TUpdate, TList, TDetails, TLite> :
         _mapper = mapper;
     }
 
-    public async Task<IReadOnlyList<TList>> GetAllAsync()
+    public virtual async Task<IReadOnlyList<TList>> GetAllAsync()
     {
         var entities = await _repository.GetAllAsNoTrackingAsync();
         return _mapper.Map<IReadOnlyList<TList>>(entities);
     }
 
-    public Task<IReadOnlyList<TLite>> GetLiteAsync(Expression<Func<TEntity, bool>> filter = null)
+    public virtual Task<IReadOnlyList<TLite>> GetLiteAsync(Expression<Func<TEntity, bool>> filter = null)
     {
         var projection = GenerateProjectionExpression<TEntity, TLite>();
         return _repository.Select(projection, filter);
@@ -44,8 +44,12 @@ public class GenericService<TEntity, TCreate, TUpdate, TList, TDetails, TLite> :
     public virtual async Task<TDetails> CreateAsync(TCreate createDto)
     {
         var entity = _mapper.Map<TEntity>(createDto);
-        await _repository.AddAsync(entity);
+        await CreateAsync(entity);
         return _mapper.Map<TDetails>(entity);
+    }
+    protected virtual async Task CreateAsync(TEntity entity)
+    {
+        await _repository.AddAsync(entity);
     }
     public async Task<PagingResult<TList>> GetPagedAsync(QueryRequestDto query)
     {

@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tawla._360.Application.BranchUseCases.Commands;
 using Tawla._360.Application.BranchUseCases.Dtos;
@@ -9,6 +10,7 @@ namespace Tawla._360.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BranchController : ControllerBase
     {
         private readonly IMediator _mediator;

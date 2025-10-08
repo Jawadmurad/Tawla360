@@ -22,7 +22,11 @@ internal class CreateRestaurantCommandHandler : INotificationHandler<CreateResta
     public async Task Handle(CreateRestaurantCommand notification, CancellationToken cancellationToken)
     {
         var file = notification.CreateRestaurantWithAdminDto.Logo;
-        var filePath = await _fileStorageService.SaveFileAsync(file, nameof(Domain.Entities.RestaurantEntities.Restaurant));
+        var filePath = string.Empty;
+        if (file != null)
+        {
+            filePath = await _fileStorageService.SaveFileAsync(file, nameof(Domain.Entities.RestaurantEntities.Restaurant));
+        }
         await _unitOfWork.BeginTransactionAsync();
         try
         {
@@ -35,6 +39,7 @@ internal class CreateRestaurantCommandHandler : INotificationHandler<CreateResta
             });
             await _userService.CreateRestaurantAdmin(notification.CreateRestaurantWithAdminDto.Admin, restaurant.Id);
             await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork.CommitAsync();
         }
         catch (Exception)
         {

@@ -3,7 +3,7 @@ using Tawla._360.Domain.Interfaces.Entities;
 
 namespace Tawla._360.Domain.Entities.Base;
 
-public abstract class BaseIdEntity : IHasId
+public abstract class BaseIdEntity : IBaseIdEntity
 {
     public BaseIdEntity()
     {

@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Tawla._360.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -40,6 +40,10 @@ namespace Tawla._360.Persistence.Migrations
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Permissions = table.Column<string[]>(type: "text[]", nullable: true),
                     RestaurantId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "text", nullable: true),
                     Name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "text", nullable: true)
@@ -63,6 +67,10 @@ namespace Tawla._360.Persistence.Migrations
                     LastName = table.Column<string>(type: "text", nullable: true),
                     UserType = table.Column<int>(type: "integer", nullable: false),
                     RestaurantId = table.Column<Guid>(type: "uuid", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    CreatedBy = table.Column<string>(type: "text", nullable: true),
+                    ModifiedDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "text", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -218,10 +226,62 @@ namespace Tawla._360.Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "RefreshTokens",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Token = table.Column<string>(type: "text", nullable: true),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ExpiryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    IsRevoked = table.Column<bool>(type: "boolean", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RefreshTokens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_RefreshTokens_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserBranch",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    BranchId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserBranch", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_UserBranch_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_UserBranch_Branches_BranchId",
+                        column: x => x.BranchId,
+                        principalTable: "Branches",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoles_Name_RestaurantId",
+                table: "AspNetRoles",
+                columns: new[] { "Name", "RestaurantId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoles_RestaurantId",
@@ -269,6 +329,21 @@ namespace Tawla._360.Persistence.Migrations
                 name: "IX_Branches_RestaurantId",
                 table: "Branches",
                 column: "RestaurantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RefreshTokens_UserId",
+                table: "RefreshTokens",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserBranch_BranchId",
+                table: "UserBranch",
+                column: "BranchId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserBranch_UserId",
+                table: "UserBranch",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -290,13 +365,19 @@ namespace Tawla._360.Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Branches");
+                name: "RefreshTokens");
+
+            migrationBuilder.DropTable(
+                name: "UserBranch");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Branches");
 
             migrationBuilder.DropTable(
                 name: "Restaurants");

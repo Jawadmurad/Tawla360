@@ -12,8 +12,8 @@ using Tawla._360.Persistence.DbContexts;
 namespace Tawla._360.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250927014854_Init")]
-    partial class Init
+    [Migration("20251012170427_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -213,6 +213,18 @@ namespace Tawla._360.Persistence.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("text");
 
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<string>("Name")
                         .HasMaxLength(256)
                         .HasColumnType("character varying(256)");
@@ -235,6 +247,9 @@ namespace Tawla._360.Persistence.Migrations
 
                     b.HasIndex("RestaurantId");
 
+                    b.HasIndex("Name", "RestaurantId")
+                        .IsUnique();
+
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
@@ -250,6 +265,12 @@ namespace Tawla._360.Persistence.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("text");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("Email")
                         .HasMaxLength(256)
@@ -268,6 +289,12 @@ namespace Tawla._360.Persistence.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("NormalizedEmail")
@@ -315,6 +342,52 @@ namespace Tawla._360.Persistence.Migrations
                     b.HasIndex("RestaurantId");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.UsersEntities.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("ExpiryDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsRevoked")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Token")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.UsersEntities.UserBranch", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BranchId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserBranch");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -397,9 +470,44 @@ namespace Tawla._360.Persistence.Migrations
                     b.Navigation("Restaurant");
                 });
 
+            modelBuilder.Entity("Tawla._360.Domain.Entities.UsersEntities.RefreshToken", b =>
+                {
+                    b.HasOne("Tawla._360.Domain.Entities.UsersEntities.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.UsersEntities.UserBranch", b =>
+                {
+                    b.HasOne("Tawla._360.Domain.Entities.RestaurantEntities.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tawla._360.Domain.Entities.UsersEntities.ApplicationUser", "User")
+                        .WithMany("UserBranches")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Tawla._360.Domain.Entities.RestaurantEntities.Restaurant", b =>
                 {
                     b.Navigation("Branches");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.UsersEntities.ApplicationUser", b =>
+                {
+                    b.Navigation("UserBranches");
                 });
 #pragma warning restore 612, 618
         }

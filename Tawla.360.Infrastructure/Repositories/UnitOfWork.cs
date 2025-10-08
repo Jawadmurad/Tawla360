@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Storage;
 namespace Tawla._360.Infrastructure.Repositories;
 
 
-public class UnitOfWork : IUnitOfWork
+internal class UnitOfWork : IUnitOfWork
 {
     private readonly ApplicationDbContext _applicationDbContext;
     private IDbContextTransaction _transaction;
