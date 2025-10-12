@@ -6,7 +6,7 @@ using Tawla._360.Domain.Interfaces.Entities;
 
 namespace Tawla._360.Domain.Entities.UsersEntities;
 
-public class ApplicationUser : IdentityUser<Guid>, IHasId
+public class ApplicationUser : IdentityUser<Guid>, IBaseIdEntity
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }
@@ -14,4 +14,9 @@ public class ApplicationUser : IdentityUser<Guid>, IHasId
     public Guid? RestaurantId { get; set; }
     [ForeignKey(nameof(RestaurantId))]
     public Restaurant Restaurant { get; set; }
+    public DateTime CreatedDate {get;set;}
+    public string CreatedBy {get;set;}
+    public DateTime? ModifiedDate {get;set;}
+    public string ModifiedBy {get;set;}
+    public ICollection<UserBranch> UserBranches { get; set; }
 }

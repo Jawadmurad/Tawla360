@@ -3,7 +3,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Tawla._360.Application.Services;
 using Tawla._360.Domain.Repositories;
+using Tawla._360.Domain.Repositories.UserRepositories;
 using Tawla._360.Infrastructure.Repositories;
+using Tawla._360.Infrastructure.Repositories.UserRepositories;
 using Tawla._360.Infrastructure.Services;
 using Tawla._360.Persistence;
 
@@ -23,7 +25,8 @@ public static class DependencyInjection
         services.AddScoped(typeof(IHasIdRepository<>), typeof(HasIdRepository<>));
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IFileStorageService, FileStorageService>();
-        services.AddTransient<IEmailSender, SmtpEmailSender>();        
+        services.AddTransient<IEmailSender, SmtpEmailSender>();
+        services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         return services;
     }
 }

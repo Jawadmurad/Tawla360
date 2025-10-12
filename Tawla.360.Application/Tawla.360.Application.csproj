@@ -10,12 +10,18 @@
     <PackageReference Include="MediatR" Version="12.5.0" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="9.0.4" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.14.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UsersUseCases/Query/" />
   </ItemGroup>
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <RootNamespace>Tawla._360.Application</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>7a6a177e-202a-45fa-9021-94cfb5c45944</UserSecretsId>
   </PropertyGroup>
 
 </Project>

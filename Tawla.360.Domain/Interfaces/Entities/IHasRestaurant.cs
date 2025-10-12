@@ -1,6 +1,6 @@
 namespace Tawla._360.Domain.Interfaces.Entities;
 
-public interface IHasRestaurant : IHasId
+public interface IHasRestaurant : IBaseIdEntity
 {
     public Guid RestaurantId { get; set; }
 }

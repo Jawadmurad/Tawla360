@@ -23,7 +23,7 @@ public class RestaurantController : ControllerBase
         await _mediator.Publish(new CreateRestaurantCommand(createRestaurantWith));
         return Ok();
     }
-    [HttpPost]
+    [HttpPost("GetPaged")]
     public async Task<IActionResult> GetPaged(QueryRequestDto query)
     {
         return Ok(await _mediator.Send(new GetRestaurantPagedQuery(query)));

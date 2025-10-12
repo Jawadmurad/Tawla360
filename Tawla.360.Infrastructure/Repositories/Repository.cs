@@ -7,7 +7,7 @@ using Tawla._360.Shared;
 
 namespace Tawla._360.Infrastructure.Repositories;
 
-public class Repository<T>(ApplicationDbContext context) : IRepository<T> where T : class, new()
+internal class Repository<T>(ApplicationDbContext context) : IRepository<T> where T : class, new()
 {
     protected readonly DbContext _context = context;
     protected readonly DbSet<T> _dbSet = context.Set<T>();
@@ -21,10 +21,15 @@ public class Repository<T>(ApplicationDbContext context) : IRepository<T> where 
         return _context.Entry(entity).ReloadAsync();
     }
 
-    public void DeleteAsync(T entity)
+    public void Delete(T entity)
     {
         _dbSet.Remove(entity);
 
+    }
+    public Task DeleteWithSaveAsync(T entity)
+    {
+        _dbSet.Remove(entity);
+        return _context.SaveChangesAsync();
     }
 
     public async Task<IReadOnlyList<T>> GetAllAsync(Expression<Func<T, bool>> filter = null,
@@ -125,12 +130,12 @@ public class Repository<T>(ApplicationDbContext context) : IRepository<T> where 
         if (orderBy != null)
             query = orderBy(query);
 
-        return await query.Select(selector).ToListAsync();
+        return await query.AsNoTracking().Select(selector).ToListAsync();
     }
 
     public Task<bool> AnyAsync(Expression<Func<T, bool>> filter)
     {
-        return _dbSet.AnyAsync(filter);
+        return _dbSet.AsNoTracking().AnyAsync(filter);
     }
 
     public Task<TKey> MaxAsync<TKey>(Expression<Func<T, TKey>> selector, Expression<Func<T, bool>> filter = null)
@@ -138,7 +143,7 @@ public class Repository<T>(ApplicationDbContext context) : IRepository<T> where 
         IQueryable<T> query = _dbSet;
         if (filter != null)
             query = query.Where(filter);
-        return query.MaxAsync(selector);
+        return query.AsNoTracking().MaxAsync(selector);
     }
 
     public Task<decimal> SumAsync(Expression<Func<T, decimal>> sumSelector, Expression<Func<T, bool>> filter = null)
@@ -146,7 +151,7 @@ public class Repository<T>(ApplicationDbContext context) : IRepository<T> where 
         IQueryable<T> query = _dbSet;
         if (filter != null)
             query = query.Where(filter);
-        return query.SumAsync(sumSelector);
+        return query.AsNoTracking().SumAsync(sumSelector);
     }
 
     public async Task<List<TValue>> GroupByAsync<TKey, TValue>(
@@ -157,7 +162,7 @@ public class Repository<T>(ApplicationDbContext context) : IRepository<T> where 
         IQueryable<T> query = _dbSet;
         if (filter != null)
             query = query.Where(filter);
-        return await query.GroupBy(groupBySelector).Select(projection).ToListAsync();
+        return await query.AsNoTracking().GroupBy(groupBySelector).Select(projection).ToListAsync();
     }
 
     public async Task<int> CountAsync(Expression<Func<T, bool>> filter = null)
@@ -207,4 +212,6 @@ public class Repository<T>(ApplicationDbContext context) : IRepository<T> where 
         await _dbSet.AddAsync(entity);
         await _context.SaveChangesAsync();
     }
+
+    
 }

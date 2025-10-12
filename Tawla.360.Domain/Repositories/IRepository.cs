@@ -37,7 +37,8 @@ public interface IRepository<T> where T : class, new()
     Task AddWithSave(T entity);
     Task Reload(T entity);
     Task UpdateAsync(T entity);
-    void DeleteAsync(T entity);
+    void Delete(T entity);
+    Task DeleteWithSaveAsync(T entity);
 
     Task<IReadOnlyList<TResult>> Select<TResult>(
         Expression<Func<T, TResult>> selector,

@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Tawla._360.Domain.Entities.RestaurantEntities;
 using Tawla._360.Domain.Entities.UsersEntities;
 using Tawla._360.Persistence.DbContexts;
+using Tawla._360.Persistence.EfCoreOverride.Stores;
+using Tawla._360.Persistence.EfCoreOverride.Validator;
 using Tawla._360.Persistence.Fakers;
 
 namespace Tawla._360.Persistence;
@@ -29,6 +31,8 @@ public static class DependencyInjection
         })
         .AddIdentity<ApplicationUser, ApplicationRole>()
         .AddEntityFrameworkStores<ApplicationDbContext>()
+        .AddRoleStore<RestaurantRoleStore>()
+        .AddRoleValidator<RestaurantRoleValidator>()
         .AddDefaultTokenProviders();
         return services;
     }
