@@ -14,6 +14,8 @@ using Tawla._360.Application.AuthUseCases.Dtos;
 using System.Collections.ObjectModel;
 using Tawla._360.Application.AuthUseCases;
 using Tawla._360.Application.Common.ServicesInterfaces;
+using Tawla._360.Domain.Exceptions;
+using Tawla._360.Application.Constants;
 
 namespace Tawla._360.Application.UsersUseCases;
 
@@ -92,12 +94,12 @@ public class UserService : HasIdGenericService<ApplicationUser, CreateUserDto, U
         var user = await _userManager.FindByEmailAsync(login.Email);
         if (user == null)
         {
-            //TODO throw an ex 
+            throw new BadRequestException(ErrorMessages.UsersErrorMessage.IncorrectEmailOrPassword);
         }
         var validPassword = await _userManager.CheckPasswordAsync(user, login.Password);
         if (!validPassword)
         {
-            //TODO throw an ex
+            throw new BadRequestException(ErrorMessages.UsersErrorMessage.IncorrectEmailOrPassword);
         }
         return await _jwtService.GenerateTokensAsync(user);
 

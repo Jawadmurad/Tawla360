@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using Tawla._360.API.Middlewares;
 using Tawla._360.Application;
 using Tawla._360.Infrastructure;
 using Tawla._360.Logging;
@@ -111,6 +112,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseMiddleware<ExceptionMiddleware>();
 app.UseRouting();
 
 app.UseAuthentication();

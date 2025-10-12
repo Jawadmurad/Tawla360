@@ -1,8 +1,5 @@
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ActionConstraints;
-using Npgsql.Internal;
 using Tawla._360.Application.UsersUseCases.Commands;
 using Tawla._360.Application.UsersUseCases.Dtos;
 
@@ -27,6 +24,12 @@ namespace Tawla._360.API.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             await _mediator.Publish(new DeleteUserCommand(id));
+            return Ok();
+        }
+        [HttpPut]
+        public async Task<IActionResult> Update(UpdateUserDto updateUser)
+        {
+            
             return Ok();
         }
     }
