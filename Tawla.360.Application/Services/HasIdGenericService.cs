@@ -26,8 +26,9 @@ where TEntity : class,IBaseIdEntity, new()
         entity.CreatedBy = _httpContextAccessorService.GetUserId()?.ToString();
         return base.CreateAsync(entity);
     }
-    public async Task Delete(Guid id)
+    public  async Task Delete(Guid id)
     {
+
         var entity = await _repository.Find(id) ?? throw new NotFoundException(nameof(TEntity));
         _repository.Delete(entity);
     }

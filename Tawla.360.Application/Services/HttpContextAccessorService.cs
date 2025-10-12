@@ -1,3 +1,4 @@
+using System.Data.SqlClient;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
@@ -53,4 +54,29 @@ public class HttpContextAccessorService : IHttpContextAccessorService
         var data = GetClaim(JwtRegisteredClaimNames.Sub);
         return Guid.Parse(data);
     }
+
+    public Guid? GetBranchId()
+    {
+        var branchId = GetHeaderValue("branch-id");
+        if (string.IsNullOrEmpty(branchId))
+        {
+            return Guid.Empty;
+        }
+        return Guid.Parse(branchId);
+    }
+
+    private string GetHeaderValue(string key)
+    {
+        var context = _httpContextAccessor.HttpContext;
+        if (context == null)
+            return null;
+
+        if (context.Request.Headers.TryGetValue(key, out var headerValue))
+        {
+            return headerValue.ToString();
+        }
+
+        return null;
+    }
+
 }

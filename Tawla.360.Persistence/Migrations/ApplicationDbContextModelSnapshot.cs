@@ -156,7 +156,7 @@ namespace Tawla._360.Persistence.Migrations
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("Branches");
+                    b.ToTable("Branches", (string)null);
                 });
 
             modelBuilder.Entity("Tawla._360.Domain.Entities.RestaurantEntities.Restaurant", b =>
@@ -197,7 +197,7 @@ namespace Tawla._360.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Restaurants");
+                    b.ToTable("Restaurants", (string)null);
                 });
 
             modelBuilder.Entity("Tawla._360.Domain.Entities.UsersEntities.ApplicationRole", b =>
@@ -363,7 +363,7 @@ namespace Tawla._360.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshTokens");
+                    b.ToTable("RefreshTokens", (string)null);
                 });
 
             modelBuilder.Entity("Tawla._360.Domain.Entities.UsersEntities.UserBranch", b =>
@@ -384,7 +384,7 @@ namespace Tawla._360.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserBranch");
+                    b.ToTable("UserBranch", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
