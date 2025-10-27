@@ -1,4 +1,3 @@
-using System;
 using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -11,9 +10,15 @@ using Tawla._360.Domain.Repositories;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Hosting;
 using Tawla._360.Application.AuthUseCases.Dtos;
-using System.Collections.ObjectModel;
 using Tawla._360.Application.AuthUseCases;
 using Tawla._360.Application.Common.ServicesInterfaces;
+using Tawla._360.Domain.Exceptions;
+using Tawla._360.Application.Constants;
+using System.Linq.Expressions;
+using LinqKit;
+using Tawla._360.Shared;
+using Tawla._360.Application.Common.Dtos.QueryRequestDtos;
+using Tawla._360.Application.Common.Extensions;
 
 namespace Tawla._360.Application.UsersUseCases;
 
@@ -32,12 +37,46 @@ public class UserService : HasIdGenericService<ApplicationUser, CreateUserDto, U
         _env = env;
         _jwtService = jwtService;
     }
+    public override async Task<IReadOnlyList<UserListDto>> GetAllAsync()
+    {
+        var entities = await _repository.GetAllAsNoTrackingAsync(c => c.RestaurantId == _httpContextAccessorService.GetRestaurantId());
+        return _mapper.Map<IReadOnlyList<UserListDto>>(entities);
+    }
+    public override Task<IReadOnlyList<LiteUserDto>> GetLiteAsync(Expression<Func<ApplicationUser, bool>> filter = null)
+    {
+        var predicate = PredicateBuilder.New<ApplicationUser>(c => c.RestaurantId == _httpContextAccessorService.GetRestaurantId());
+        if (filter != null)
+            predicate = predicate.And(filter);
+        var projection = GenerateProjectionExpression<ApplicationUser, LiteUserDto>();
+        return _repository.Select(projection, predicate);
+    }
+    public override async Task<PagingResult<UserListDto>> GetPagedAsync(QueryRequestDto query)
+    {
+        var predicate = PredicateBuilder.New<ApplicationUser>(c => c.RestaurantId == _httpContextAccessorService.GetRestaurantId());
+        var filter = query.FilterGroup.BuildFilter<ApplicationUser>();
+        if (filter != null)
+            predicate = predicate.And(filter);
+        var orderBy = query.Sort.BuildSorting<ApplicationUser>();
+        var pagedResult = await _repository.GetPagedAsync(query.Paging.PageNumber, query.Paging.PageSize, predicate, orderBy);
+        var mappedItems = _mapper.Map<List<UserListDto>>(pagedResult.Data);
+        return new PagingResult<UserListDto>()
+        {
+            Data = mappedItems,
+            Count = pagedResult.Count
+        };
+    }
     public override async Task<UserDto> CreateAsync(CreateUserDto createDto)
     {
+        var resId = _httpContextAccessorService.GetRestaurantId();
+
         var user = _mapper.Map<ApplicationUser>(createDto);
-        var result= await _userManager.CreateAsync(user); 
-        
-        await _userManager.AddPasswordAsync(user,createDto.Password);
+        user.RestaurantId = resId;
+        var result = await _userManager.CreateAsync(user);
+        if (result.Errors.Any())
+        {
+            //TODO:throw error 
+        }
+        await _userManager.AddPasswordAsync(user, createDto.Password);
         await _userManager.AddToRoleAsync(user, createDto.RoleName);
         return _mapper.Map<UserDto>(user);
     }
@@ -92,14 +131,32 @@ public class UserService : HasIdGenericService<ApplicationUser, CreateUserDto, U
         var user = await _userManager.FindByEmailAsync(login.Email);
         if (user == null)
         {
-            //TODO throw an ex 
+            throw new BadRequestException(ErrorMessages.UsersErrorMessage.IncorrectEmailOrPassword);
         }
         var validPassword = await _userManager.CheckPasswordAsync(user, login.Password);
         if (!validPassword)
         {
-            //TODO throw an ex
+            throw new BadRequestException(ErrorMessages.UsersErrorMessage.IncorrectEmailOrPassword);
         }
         return await _jwtService.GenerateTokensAsync(user);
+
+    }
+
+    public async Task AssignUserToBranch(Guid userId, Guid branchId)
+    {
+        var user = await _repository.GetByIdAsync(userId, c => c.UserBranches);
+        user.UserBranches.Add(new UserBranch()
+        {
+            BranchId = branchId
+        });
+        _repository.Update(user);
+    }
+
+    public async Task UnAssignUserToBranch(Guid userId, Guid branchId)
+    {
+        var user = await _repository.GetByIdAsync(userId, c => c.UserBranches);
+        user.UserBranches.Remove(user.UserBranches.First(c => c.BranchId == branchId));
+        _repository.Update(user);
 
     }
 }

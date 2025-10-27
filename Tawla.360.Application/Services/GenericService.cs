@@ -51,7 +51,7 @@ public class GenericService<TEntity, TCreate, TUpdate, TList, TDetails, TLite> :
     {
         await _repository.AddAsync(entity);
     }
-    public async Task<PagingResult<TList>> GetPagedAsync(QueryRequestDto query)
+    public virtual async Task<PagingResult<TList>> GetPagedAsync(QueryRequestDto query)
     {
         var filter = query.FilterGroup.BuildFilter<TEntity>();
         var orderBy = query.Sort.BuildSorting<TEntity>();
@@ -122,9 +122,9 @@ public class GenericService<TEntity, TCreate, TUpdate, TList, TDetails, TLite> :
         return Expression.Lambda<Func<Entity, Projection>>(body, parameter);
     }
 
-    public async Task UpdateAsync(TUpdate updateDto)
+    public void Update(TUpdate updateDto)
     {
         var entity = _mapper.Map<TEntity>(updateDto);
-        await _repository.UpdateAsync(entity);
+        _repository.Update(entity);
     }
 }
