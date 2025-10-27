@@ -11,4 +11,6 @@ public interface IUserService : IHasIdGenericService<ApplicationUser, CreateUser
     Task CreateRestaurantAdmin(CreateRestaurantAdminDto createRestaurant, Guid restaurantId);
     Task<AuthResponse> Login(LoginRequest login);
     Task ResetPassword(string email, string token, string newPassword);
+    Task AssignUserToBranch(Guid userId, Guid branchId);
+    Task UnAssignUserToBranch(Guid userId, Guid branchId);
 }

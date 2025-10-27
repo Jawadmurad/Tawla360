@@ -26,7 +26,6 @@ namespace Tawla._360.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CreateRoleDto createRole, [FromServices] IHttpContextAccessorService httpContextAccessorService)
         {
-            var x = httpContextAccessorService.GetRestaurantId();
             await _mediator.Publish(new CreateRoleCommand(createRole));
             return Ok();
         }

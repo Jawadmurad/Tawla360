@@ -56,7 +56,7 @@ IConfiguration config)
             new (JwtRegisteredClaimNames.GivenName, user.FirstName),
             new (JwtRegisteredClaimNames.FamilyName, user.LastName ?? ""),
             new (CustomClaim.UserType, ((int)user.UserType).ToString()),
-            new (CustomClaim.RestaurantId, user.RestaurantId?.ToString()),
+            new (CustomClaim.RestaurantId, user.RestaurantId?.ToString()??string.Empty),
         };
 
 

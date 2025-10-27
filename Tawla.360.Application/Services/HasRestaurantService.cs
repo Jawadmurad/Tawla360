@@ -1,4 +1,6 @@
+using System.Linq.Expressions;
 using AutoMapper;
+using LinqKit;
 using Tawla._360.Application.Common.ServicesInterfaces;
 using Tawla._360.Domain.Interfaces.Entities;
 using Tawla._360.Domain.Repositories;
@@ -13,6 +15,15 @@ public class HasRestaurantService<TEntity, TCreate, TUpdate, TList, TDetails, TL
     where TDetails : class
     where TLite : class
 {
+    public override Task<IReadOnlyList<TLite>> GetLiteAsync(Expression<Func<TEntity, bool>> filter = null)
+    {
+        var predicate = PredicateBuilder.New<TEntity>(c => c.RestaurantId == _httpContextAccessorService.GetRestaurantId());
+        if (filter != null)
+        {
+            predicate = predicate.And(filter);
+        }
+        return base.GetLiteAsync(predicate);
+    }
     protected override Task CreateAsync(TEntity entity)
     {
         entity.RestaurantId = _httpContextAccessorService.GetRestaurantId().Value;

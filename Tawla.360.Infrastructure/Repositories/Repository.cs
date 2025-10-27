@@ -98,10 +98,9 @@ internal class Repository<T>(ApplicationDbContext context) : IRepository<T> wher
         return new PagingResult<T> { Data = data, Count = count };
     }
 
-    public async Task UpdateAsync(T entity)
+    public void Update(T entity)
     {
         _dbSet.Update(entity);
-        await _context.SaveChangesAsync();
     }
 
     protected IQueryable<T> IncludeLambda(IQueryable<T> query, params Expression<Func<T, object>>[] propertySelectors)

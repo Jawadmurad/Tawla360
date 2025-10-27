@@ -18,7 +18,7 @@ public interface IGenericService<TEntity, TCreate, TUpdate, TList, TDetails, TLi
     Task<IReadOnlyList<TLite>> GetLiteAsync(Expression<Func<TEntity, bool>> filter = null);
 
     Task<TDetails> CreateAsync(TCreate createDto);
-    Task UpdateAsync(TUpdate updateDto);
+    void Update(TUpdate updateDto);
 
     Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter);
 
