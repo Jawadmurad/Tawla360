@@ -41,6 +41,11 @@ namespace Tawla._360.API.Controllers
             await _mediator.Publish(new UpdateRoleCommand(updateRole));
             return Ok();
         }
+        [HttpGet("Permissions")]
+        public async Task<IActionResult> Permissions()
+        {
+            return Ok();
+        }
 
 
 
