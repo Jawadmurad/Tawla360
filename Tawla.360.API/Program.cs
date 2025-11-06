@@ -17,6 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
 services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -57,6 +58,10 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+builder.Services.AddControllers()
+    .AddDataAnnotationsLocalization();
+
 
 services.AddOpenApi();
 builder.Host.UseLogging(builder.Configuration.GetConnectionString("LoggingConnection"));
@@ -89,6 +94,17 @@ builder.Services.AddAuthentication(options =>
 
 
 var app = builder.Build();
+var supportedCultures = new[] { "ar", "en" };
+
+var localizationOptions = new RequestLocalizationOptions()
+    .SetDefaultCulture(supportedCultures[0])
+    .AddSupportedCultures(supportedCultures)
+    .AddSupportedUICultures(supportedCultures);
+
+localizationOptions.ApplyCurrentCultureToResponseHeaders = true; // optional but nice
+localizationOptions.RequestCultureProviders.Insert(0, new Microsoft.AspNetCore.Localization.AcceptLanguageHeaderRequestCultureProvider());
+
+app.UseRequestLocalization(localizationOptions);
 
 
 await using (var serviceScope = app.Services.CreateAsyncScope())

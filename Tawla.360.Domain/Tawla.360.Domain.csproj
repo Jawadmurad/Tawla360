@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="Entities/Base/.config/dotnet-tools.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="../Tawla.360.Shared/Tawla.360.Shared.csproj" />
   </ItemGroup>
 

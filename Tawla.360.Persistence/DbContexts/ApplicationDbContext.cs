@@ -2,6 +2,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Tawla._360.Domain.Entities.RestaurantEntities;
+using Tawla._360.Domain.Entities.Settings;
 using Tawla._360.Domain.Entities.UsersEntities;
 
 namespace Tawla._360.Persistence.DbContexts;
@@ -19,4 +20,6 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<Restaurant> Restaurants { get; set; }
     public DbSet<Branch> Branches { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
+    public DbSet<Tax> Taxes { get; set; }
+    public DbSet<Discount> Discounts { get; set; }
 }
