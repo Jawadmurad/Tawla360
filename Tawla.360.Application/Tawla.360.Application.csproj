@@ -14,6 +14,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="ItemUseCases/Handlers/" />
+    <Folder Include="ItemUseCases/Handlers/CommandHandlers/" />
+    <Folder Include="ItemUseCases/Handlers/QueryHandlers/" />
+    <Folder Include="ItemUseCases/Query/" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="UsersUseCases/Query/" />
   </ItemGroup>
 
