@@ -8,6 +8,10 @@ namespace Tawla._360.Application.DiscountUseCases.Handlers.QueriesHandlers;
 public class GetAllDiscountLiteQueryHandler : IRequestHandler<GetAllDiscountLiteQuery, IReadOnlyList<LiteDiscountDto>>
 {
     private readonly IDiscountService _discountService;
+    public GetAllDiscountLiteQueryHandler(IDiscountService discountService)
+    {
+        _discountService = discountService;
+    }
     public Task<IReadOnlyList<LiteDiscountDto>> Handle(GetAllDiscountLiteQuery request, CancellationToken cancellationToken)
     {
         return _discountService.GetLiteAsync();

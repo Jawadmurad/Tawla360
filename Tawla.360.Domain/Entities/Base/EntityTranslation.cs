@@ -1,9 +1,6 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-
 namespace Tawla._360.Domain.Entities.Base;
 
-public class Translation
+public class EntityTranslation
 {
     public string PropertyName { get; set; }
     public string Value { get; set; }

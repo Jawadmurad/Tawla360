@@ -3,7 +3,7 @@ using Tawla._360.Domain.Entities.Base;
 
 namespace Tawla._360.Domain.Interfaces.Entities;
 
-public interface ITranslatedEntity<TEntity> where TEntity:Translation
+public interface ITranslatedEntity<TTranslation> where TTranslation:EntityTranslation
 {
-    public ICollection<TEntity> Translation { get; set; }
+    public ICollection<TTranslation> Translations { get; set; }
 }

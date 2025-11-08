@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Tawla._360.Application.AuthUseCases;
 using Tawla._360.Application.BranchUseCases;
+using Tawla._360.Application.CategoryUseCases;
 using Tawla._360.Application.Common.ServicesInterfaces;
 using Tawla._360.Application.DisCountUseCases;
 using Tawla._360.Application.RestaurantUseCases;
@@ -26,6 +27,7 @@ public static class DependencyInjection
         services.AddScoped<IHttpContextAccessorService, HttpContextAccessorService>();
         services.AddScoped<ITaxService, TaxService>();
         services.AddScoped<IDiscountService, DiscountService>();
+        services.AddScoped<ICategoryService, CategoryService>();
         return services;
     }
 }

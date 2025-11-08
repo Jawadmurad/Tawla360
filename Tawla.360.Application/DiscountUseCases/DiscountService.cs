@@ -12,5 +12,6 @@ public class DiscountService : HasBranchService<Discount, CreateDiscountDto, Upd
 {
     public DiscountService(IHasIdRepository<Discount> repository, IMapper mapper, IHttpContextAccessorService httpContextAccessorService) : base(repository, mapper, httpContextAccessorService)
     {
+        
     }
 }

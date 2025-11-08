@@ -10,5 +10,5 @@ public class Category : BaseRestaurantEntity, ITranslatedEntity<CategoryTranslat
     public Guid? ParentCategoryId { get; set; }
     [ForeignKey(nameof(ParentCategoryId))]
     public Category ParentCategory { get; set; }
-    public ICollection<CategoryTranslation> Translation { get; set; }
+    public ICollection<CategoryTranslation> Translations { get; set; }
 }

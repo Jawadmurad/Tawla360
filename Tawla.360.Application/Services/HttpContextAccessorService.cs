@@ -79,4 +79,6 @@ public class HttpContextAccessorService : IHttpContextAccessorService
         return null;
     }
 
+    public string GetAcceptedLanguage() => GetHeaderValue("Accept-Language");
+
 }

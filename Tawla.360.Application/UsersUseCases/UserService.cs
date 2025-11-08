@@ -47,7 +47,7 @@ public class UserService : HasIdGenericService<ApplicationUser, CreateUserDto, U
         var predicate = PredicateBuilder.New<ApplicationUser>(c => c.RestaurantId == _httpContextAccessorService.GetRestaurantId());
         if (filter != null)
             predicate = predicate.And(filter);
-        var projection = GenerateProjectionExpression<ApplicationUser, LiteUserDto>();
+        var projection = GenerateProjectionExpression<ApplicationUser, LiteUserDto>(_httpContextAccessorService.GetAcceptedLanguage());
         return _repository.Select(projection, predicate);
     }
     public override async Task<PagingResult<UserListDto>> GetPagedAsync(QueryRequestDto query)

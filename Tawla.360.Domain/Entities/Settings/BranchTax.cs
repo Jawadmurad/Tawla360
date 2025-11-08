@@ -10,5 +10,5 @@ public class BranchTax:BaseBranchEntity
     [ForeignKey(nameof(TaxId))]
     public Tax Tax { get; set; }
     public decimal Amount { get; set; }
-    public TaxType Type { get; set; }
+    public AmountType Type { get; set; }
 }

@@ -1,4 +1,3 @@
-using System;
 using MediatR;
 using Tawla._360.Application.DiscountUseCases.Command;
 using Tawla._360.Application.DisCountUseCases;
@@ -10,6 +9,11 @@ public class UpdateDiscountCommandHandler : INotificationHandler<UpdateDiscountC
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IDiscountService _discountService;
+    public UpdateDiscountCommandHandler(IUnitOfWork unitOfWork,IDiscountService discountService)
+    {
+        _unitOfWork = unitOfWork;
+        _discountService = discountService;
+    }
     public Task Handle(UpdateDiscountCommand notification, CancellationToken cancellationToken)
     {
         _discountService.Update(notification.UpdateDiscount);

@@ -1,5 +1,7 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Tawla._360.Application.Common.Dtos.QueryRequestDtos;
 using Tawla._360.Application.DiscountUseCases.Command;
 using Tawla._360.Application.DiscountUseCases.Dtos;
 using Tawla._360.Application.DiscountUseCases.Queries;
@@ -8,6 +10,7 @@ namespace Tawla._360.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DiscountController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -21,6 +24,11 @@ namespace Tawla._360.API.Controllers
             await _mediator.Publish(new CreateDiscountCommand(createDiscount));
             return Ok();
         }
+        [HttpPost("GetPaged")]
+        public async Task<IActionResult> GetPaged(QueryRequestDto query)
+        {
+            return Ok(await _mediator.Send(new GetDiscountPagedQuery(query)));
+        }
         [HttpGet("Lite")]
         public async Task<IActionResult> GetLite()
         {
@@ -30,12 +38,6 @@ namespace Tawla._360.API.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             await _mediator.Publish(new DeleteDiscountCommand(id));
-            return Ok();
-        }
-        [HttpPut]
-        public async Task<IActionResult> Update(UpdateDiscountDto updateDiscountDto)
-        {
-            await _mediator.Publish(new UpdateDiscountCommand(updateDiscountDto));
             return Ok();
         }
     }
