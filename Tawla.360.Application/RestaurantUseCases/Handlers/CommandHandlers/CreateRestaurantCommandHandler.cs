@@ -36,6 +36,8 @@ internal class CreateRestaurantCommandHandler : INotificationHandler<CreateResta
                 Logo = filePath,
                 Name = notification.CreateRestaurantWithAdminDto.Name,
                 MainBranchLocation = notification.CreateRestaurantWithAdminDto.MainBranchLocation,
+                InsertionDefaultLanguage = notification.CreateRestaurantWithAdminDto.InsertionDefaultLanguage,
+                NumberOfBranches = notification.CreateRestaurantWithAdminDto.NumberOfBranches,
             });
             await _userService.CreateRestaurantAdmin(notification.CreateRestaurantWithAdminDto.Admin, restaurant.Id);
             await _unitOfWork.SaveChangesAsync();

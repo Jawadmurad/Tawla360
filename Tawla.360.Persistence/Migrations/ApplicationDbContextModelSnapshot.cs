@@ -152,11 +152,16 @@ namespace Tawla._360.Persistence.Migrations
                     b.Property<Guid>("RestaurantId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid?>("TaxId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("RestaurantId");
 
-                    b.ToTable("Branches", (string)null);
+                    b.HasIndex("TaxId");
+
+                    b.ToTable("Branches");
                 });
 
             modelBuilder.Entity("Tawla._360.Domain.Entities.RestaurantEntities.Restaurant", b =>
@@ -176,6 +181,10 @@ namespace Tawla._360.Persistence.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
+
+                    b.Property<string>("InsertionDefaultLanguage")
+                        .IsRequired()
+                        .HasColumnType("char(4)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
@@ -197,7 +206,81 @@ namespace Tawla._360.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Restaurants", (string)null);
+                    b.ToTable("Restaurants");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.Settings.Discount", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BranchId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Value")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
+
+                    b.ToTable("Discounts");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.Settings.Tax", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsVat")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("RestaurantId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.ToTable("Taxes");
                 });
 
             modelBuilder.Entity("Tawla._360.Domain.Entities.UsersEntities.ApplicationRole", b =>
@@ -278,6 +361,9 @@ namespace Tawla._360.Persistence.Migrations
 
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
 
                     b.Property<string>("LastName")
                         .HasColumnType("text");
@@ -363,7 +449,7 @@ namespace Tawla._360.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("RefreshTokens", (string)null);
+                    b.ToTable("RefreshTokens");
                 });
 
             modelBuilder.Entity("Tawla._360.Domain.Entities.UsersEntities.UserBranch", b =>
@@ -384,7 +470,7 @@ namespace Tawla._360.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserBranch", (string)null);
+                    b.ToTable("UserBranch");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -446,6 +532,32 @@ namespace Tawla._360.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Tawla._360.Domain.Entities.Settings.Tax", null)
+                        .WithMany("BranchTaxes")
+                        .HasForeignKey("TaxId");
+
+                    b.Navigation("Restaurant");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.Settings.Discount", b =>
+                {
+                    b.HasOne("Tawla._360.Domain.Entities.RestaurantEntities.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.Settings.Tax", b =>
+                {
+                    b.HasOne("Tawla._360.Domain.Entities.RestaurantEntities.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Restaurant");
                 });
 
@@ -500,6 +612,11 @@ namespace Tawla._360.Persistence.Migrations
             modelBuilder.Entity("Tawla._360.Domain.Entities.RestaurantEntities.Restaurant", b =>
                 {
                     b.Navigation("Branches");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.Settings.Tax", b =>
+                {
+                    b.Navigation("BranchTaxes");
                 });
 
             modelBuilder.Entity("Tawla._360.Domain.Entities.UsersEntities.ApplicationUser", b =>

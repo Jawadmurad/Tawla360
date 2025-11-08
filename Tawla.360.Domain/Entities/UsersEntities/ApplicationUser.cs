@@ -19,5 +19,5 @@ public class ApplicationUser : IdentityUser<Guid>, IBaseIdEntity
     public DateTime? ModifiedDate { get; set; }
     public string ModifiedBy { get; set; }
     public ICollection<UserBranch> UserBranches { get; set; }
-    //public bool IsActive { get; set; }
+    public bool IsActive { get; set; }
 }
