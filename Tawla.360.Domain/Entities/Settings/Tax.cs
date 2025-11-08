@@ -1,5 +1,4 @@
 using Tawla._360.Domain.Entities.Base;
-using Tawla._360.Domain.Entities.RestaurantEntities;
 using Tawla._360.Domain.Enums;
 
 namespace Tawla._360.Domain.Entities.Settings;
@@ -10,5 +9,5 @@ public class Tax : BaseRestaurantEntity
     public TaxType Type { get; set; }
     public decimal Amount { get; set; } 
     public bool IsVat { get; set; }
-    public ICollection<Branch> BranchTaxes { get; set; }
+    public ICollection<BranchTax> BranchTaxes { get; set; }
 }
