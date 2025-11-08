@@ -7,6 +7,7 @@ using Microsoft.OpenApi.Models;
 using Serilog;
 using Tawla._360.API.Middlewares;
 using Tawla._360.Application;
+using Tawla._360.Domain.Entities.UsersEntities;
 using Tawla._360.Infrastructure;
 using Tawla._360.Logging;
 using Tawla._360.Logging.Middlewares;

@@ -7,4 +7,5 @@ public record class CreateRestaurantDto
     public string Logo { get; set; }
     public string MainBranchLocation { get; set; }
     public int NumberOfBranches { get; set; }
+    public string InsertionDefaultLanguage { get; set; }
 }

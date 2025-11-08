@@ -10,4 +10,5 @@ public class Restaurant : BaseNamedEntity
     public TimeOnly CloseTime { get; set; }
     public bool IsActive { get; set; }
     public virtual ICollection<Branch> Branches { get; set; }
+    public string InsertionDefaultLanguage { get; set; }
 }

@@ -9,4 +9,6 @@ public record class CreateRestaurantWithAdmin
     public IFormFile Logo { get; set; }
     public string MainBranchLocation { get; set; }
     public CreateRestaurantAdminDto Admin { get; set; }
+    public string InsertionDefaultLanguage { get; set; }
+    public int NumberOfBranches { get; set; }
 }
