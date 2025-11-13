@@ -3,7 +3,7 @@ using Tawla._360.Domain.Entities.Base;
 
 namespace Tawla._360.Domain.Entities.MenuEntities;
 
-public class ItemTranslation:Translation
+public class ItemTranslation:EntityTranslation
 {
     public Guid ItemId { get; set; }
     public Item Item { get; set; }

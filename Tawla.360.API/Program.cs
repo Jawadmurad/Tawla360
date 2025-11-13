@@ -1,13 +1,13 @@
 using System.Text;
-using Bogus.Extensions.UnitedKingdom;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Serilog;
 using Tawla._360.API.Middlewares;
 using Tawla._360.Application;
-using Tawla._360.Domain.Entities.UsersEntities;
+using Tawla._360.Application.Static;
+using Tawla._360.Domain.Entities.RestaurantEntities;
+using Tawla._360.Domain.Repositories;
 using Tawla._360.Infrastructure;
 using Tawla._360.Logging;
 using Tawla._360.Logging.Middlewares;
@@ -111,7 +111,13 @@ app.UseRequestLocalization(localizationOptions);
 await using (var serviceScope = app.Services.CreateAsyncScope())
 await using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>())
 {
-    await dbContext.Database.MigrateAsync();
+         await dbContext.Database.MigrateAsync();
+}
+// Populate DefaultLanguageProvider cache at startup
+using (var scope = app.Services.CreateScope())
+{
+    var repository = scope.ServiceProvider.GetRequiredService<IRepository<Restaurant>>();
+    DefaultLanguageProvider.Initialize(repository);
 }
 
 // Configure the HTTP request pipeline.

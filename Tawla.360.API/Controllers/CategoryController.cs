@@ -15,11 +15,6 @@ namespace Tawla._360.API.Controllers
         {
             _mediator = mediator;
         }
-        [HttpGet("GetColorList")]
-        public async Task<IActionResult> GetColorList()
-        {
-            return Ok();
-        }
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CreateCategoryDto createCategory)
         {

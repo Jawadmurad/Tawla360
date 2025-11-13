@@ -12,11 +12,11 @@ where TEntity : class,IBaseIdEntity, new()
     where TUpdate : class, IHasId
     where TList : class
     where TDetails : class
-    where TLite : class
+    where TLite : class,new()
 {
     protected readonly IHttpContextAccessorService _httpContextAccessorService;
     protected new readonly IHasIdRepository<TEntity> _repository;
-    public HasIdGenericService(IHasIdRepository<TEntity> repository, IMapper mapper,IHttpContextAccessorService httpContextAccessorService) : base(repository, mapper)
+    public HasIdGenericService(IHasIdRepository<TEntity> repository, IMapper mapper,IHttpContextAccessorService httpContextAccessorService) : base(repository, mapper,httpContextAccessorService)
     {
         _repository = repository;
         _httpContextAccessorService = httpContextAccessorService;

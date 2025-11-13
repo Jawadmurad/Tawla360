@@ -10,4 +10,5 @@ public interface IHttpContextAccessorService
     UserType GetUserType();
     Guid? GetUserId();
     Guid? GetBranchId();
+    string GetAcceptedLanguage();
 }

@@ -7,23 +7,19 @@ using Tawla._360.Domain.Repositories;
 
 namespace Tawla._360.Application.Services;
 
-public class HasRestaurantService<TEntity, TCreate, TUpdate, TList, TDetails, TLite>(IHasIdRepository<TEntity> repository, IMapper mapper, IHttpContextAccessorService httpContextAccessorService) : HasIdGenericService<TEntity, TCreate, TUpdate, TList, TDetails, TLite>(repository, mapper, httpContextAccessorService), IHasRestaurantService<TEntity, TCreate, TUpdate, TList, TDetails, TLite>
+public class HasRestaurantService<TEntity, TCreate, TUpdate, TList, TDetails, TLite> : HasIdGenericService<TEntity, TCreate, TUpdate, TList, TDetails, TLite>, IHasRestaurantService<TEntity, TCreate, TUpdate, TList, TDetails, TLite>
     where TEntity : class, IHasRestaurant, new()
     where TCreate : class
     where TUpdate : class, IHasId
     where TList : class
     where TDetails : class
-    where TLite : class
+    where TLite : class,new()
 {
-    public override Task<IReadOnlyList<TLite>> GetLiteAsync(Expression<Func<TEntity, bool>> filter = null)
+    public HasRestaurantService(IHasIdRepository<TEntity> repository, IMapper mapper, IHttpContextAccessorService httpContextAccessorService) : base(repository, mapper, httpContextAccessorService)
     {
-        var predicate = PredicateBuilder.New<TEntity>(c => c.RestaurantId == _httpContextAccessorService.GetRestaurantId());
-        if (filter != null)
-        {
-            predicate = predicate.And(filter);
-        }
-        return base.GetLiteAsync(predicate);
+        this.serviceFilter = PredicateBuilder.New<TEntity>(x => x.RestaurantId == _httpContextAccessorService.GetRestaurantId());
     }
+
     protected override Task CreateAsync(TEntity entity)
     {
         entity.RestaurantId = _httpContextAccessorService.GetRestaurantId().Value;

@@ -7,5 +7,5 @@ namespace Tawla._360.Domain.Entities.MenuEntities;
 public class Item:BaseRestaurantEntity,ITranslatedEntity<ItemTranslation>
 {
     public Guid CategoryId { get; set; }
-    public ICollection<ItemTranslation> Translation { get; set; }
+    public ICollection<ItemTranslation> Translations { get; set; }
 }

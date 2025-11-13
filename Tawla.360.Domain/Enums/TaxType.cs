@@ -1,6 +1,6 @@
 namespace Tawla._360.Domain.Enums;
 
-public enum TaxType
+public enum AmountType
 {
     Fixed,
     Percentage
