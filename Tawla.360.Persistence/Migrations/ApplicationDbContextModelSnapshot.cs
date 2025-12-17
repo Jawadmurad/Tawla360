@@ -125,6 +125,243 @@ namespace Tawla._360.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Tawla._360.Domain.Entities.MenuEntities.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("HexColor")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("ParentCategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("RestaurantId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentCategoryId");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.MenuEntities.Item", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("text");
+
+                    b.Property<int?>("LowStockAlert")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("RestaurantId")
+                        .HasColumnType("uuid");
+
+                    b.PrimitiveCollection<string[]>("Tags")
+                        .HasColumnType("text[]");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.HasIndex("RestaurantId");
+
+                    b.ToTable("Items");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.MenuEntities.ItemPrice", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BranchId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("ItemPrices");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.MenuEntities.Modifier", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Modifiers");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.MenuEntities.ModifierGroup", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("ItemId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal?>("MaxMultipleQuantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("MaxQuantity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MinQuantity")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("MultipleQuantity")
+                        .HasColumnType("boolean");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("ModifierGroups");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.MenuEntities.ModifierOption", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<int?>("DisplayOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("ModifierGroupId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ModifierId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ModifierGroupId");
+
+                    b.HasIndex("ModifierId");
+
+                    b.ToTable("ModifierOptions");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.MenuEntities.ModifierOptionPrice", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BranchId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("ModifierOptionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("PriceChange")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BranchId");
+
+                    b.HasIndex("ModifierOptionId");
+
+                    b.ToTable("ModifierOptionPrice");
+                });
+
             modelBuilder.Entity("Tawla._360.Domain.Entities.RestaurantEntities.Branch", b =>
                 {
                     b.Property<Guid>("Id")
@@ -556,6 +793,213 @@ namespace Tawla._360.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Tawla._360.Domain.Entities.MenuEntities.Category", b =>
+                {
+                    b.HasOne("Tawla._360.Domain.Entities.MenuEntities.Category", "ParentCategory")
+                        .WithMany()
+                        .HasForeignKey("ParentCategoryId");
+
+                    b.HasOne("Tawla._360.Domain.Entities.RestaurantEntities.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsMany("Tawla._360.Domain.Entities.MenuEntities.CategoryTranslation", "Translations", b1 =>
+                        {
+                            b1.Property<Guid>("CategoryId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("PropertyName")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("LanguageCode")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("CategoryId", "PropertyName", "LanguageCode");
+
+                            b1.ToTable("CategoryTranslation", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("CategoryId");
+                        });
+
+                    b.Navigation("ParentCategory");
+
+                    b.Navigation("Restaurant");
+
+                    b.Navigation("Translations");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.MenuEntities.Item", b =>
+                {
+                    b.HasOne("Tawla._360.Domain.Entities.MenuEntities.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tawla._360.Domain.Entities.RestaurantEntities.Restaurant", "Restaurant")
+                        .WithMany()
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsMany("Tawla._360.Domain.Entities.MenuEntities.ItemTranslation", "Translations", b1 =>
+                        {
+                            b1.Property<Guid>("ItemId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("PropertyName")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("LanguageCode")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("ItemId", "PropertyName", "LanguageCode");
+
+                            b1.ToTable("ItemTranslation", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("ItemId");
+                        });
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Restaurant");
+
+                    b.Navigation("Translations");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.MenuEntities.ItemPrice", b =>
+                {
+                    b.HasOne("Tawla._360.Domain.Entities.RestaurantEntities.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tawla._360.Domain.Entities.MenuEntities.Item", "Item")
+                        .WithMany("Prices")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+
+                    b.Navigation("Item");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.MenuEntities.Modifier", b =>
+                {
+                    b.OwnsMany("Tawla._360.Domain.Entities.MenuEntities.ModifierTranslation", "Translations", b1 =>
+                        {
+                            b1.Property<Guid>("ModifierId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("PropertyName")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("LanguageCode")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("ModifierId", "PropertyName", "LanguageCode");
+
+                            b1.ToTable("ModifierTranslation", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("ModifierId");
+                        });
+
+                    b.Navigation("Translations");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.MenuEntities.ModifierGroup", b =>
+                {
+                    b.HasOne("Tawla._360.Domain.Entities.MenuEntities.Item", "Item")
+                        .WithMany("ModifierGroups")
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.OwnsMany("Tawla._360.Domain.Entities.MenuEntities.ModifierGroupTranslation", "Translations", b1 =>
+                        {
+                            b1.Property<Guid>("ModifierGroupId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("PropertyName")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("LanguageCode")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Value")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("ModifierGroupId", "PropertyName", "LanguageCode");
+
+                            b1.ToTable("ModifierGroupTranslation", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("ModifierGroupId");
+                        });
+
+                    b.Navigation("Item");
+
+                    b.Navigation("Translations");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.MenuEntities.ModifierOption", b =>
+                {
+                    b.HasOne("Tawla._360.Domain.Entities.MenuEntities.ModifierGroup", "ModifierGroup")
+                        .WithMany("Options")
+                        .HasForeignKey("ModifierGroupId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tawla._360.Domain.Entities.MenuEntities.Modifier", "Modifier")
+                        .WithMany()
+                        .HasForeignKey("ModifierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Modifier");
+
+                    b.Navigation("ModifierGroup");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.MenuEntities.ModifierOptionPrice", b =>
+                {
+                    b.HasOne("Tawla._360.Domain.Entities.RestaurantEntities.Branch", "Branch")
+                        .WithMany()
+                        .HasForeignKey("BranchId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tawla._360.Domain.Entities.MenuEntities.ModifierOption", "ModifierOption")
+                        .WithMany("ModifierOptionPrices")
+                        .HasForeignKey("ModifierOptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Branch");
+
+                    b.Navigation("ModifierOption");
+                });
+
             modelBuilder.Entity("Tawla._360.Domain.Entities.RestaurantEntities.Branch", b =>
                 {
                     b.HasOne("Tawla._360.Domain.Entities.RestaurantEntities.Restaurant", "Restaurant")
@@ -721,6 +1165,23 @@ namespace Tawla._360.Persistence.Migrations
                     b.Navigation("Branch");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.MenuEntities.Item", b =>
+                {
+                    b.Navigation("ModifierGroups");
+
+                    b.Navigation("Prices");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.MenuEntities.ModifierGroup", b =>
+                {
+                    b.Navigation("Options");
+                });
+
+            modelBuilder.Entity("Tawla._360.Domain.Entities.MenuEntities.ModifierOption", b =>
+                {
+                    b.Navigation("ModifierOptionPrices");
                 });
 
             modelBuilder.Entity("Tawla._360.Domain.Entities.RestaurantEntities.Restaurant", b =>

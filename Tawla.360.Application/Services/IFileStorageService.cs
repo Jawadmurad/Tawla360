@@ -5,4 +5,5 @@ namespace Tawla._360.Application.Services;
 public interface IFileStorageService
 {
     Task<string> SaveFileAsync(IFormFile file, string entityName);
+    Task DeleteFileAsync(string path);
 }

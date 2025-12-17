@@ -1,0 +1,15 @@
+using Tawla._360.Application.Attributes;
+using Tawla._360.Application.ModifierGroupUserCase.Dtos;
+
+namespace Tawla._360.Application.ItemUseCases.Dtos.CreateItemDtos;
+
+public record class CreateItemModifierGroupDto
+{
+    [Translatable]
+    public string Name { get; set; }
+    public bool MultipleQuantity { get; set; }
+    public decimal? MaxMultipleQuantity { get; set; }
+    public int MinQuantity { get; set; }
+    public int MaxQuantity { get; set; }
+    public List<CreateModifierGroupOptionDto> Options { get; set; }
+}

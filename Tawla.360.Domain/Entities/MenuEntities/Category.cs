@@ -4,7 +4,7 @@ using Tawla._360.Domain.Interfaces.Entities;
 
 namespace Tawla._360.Domain.Entities.MenuEntities;
 
-public class Category : BaseRestaurantEntity, ITranslatedEntity<CategoryTranslation>,IHasRestaurant
+public class Category : BaseRestaurantEntity, ITranslatedEntity<CategoryTranslation>
 {
     public string HexColor { get; set; }
     public Guid? ParentCategoryId { get; set; }
@@ -12,3 +12,4 @@ public class Category : BaseRestaurantEntity, ITranslatedEntity<CategoryTranslat
     public Category ParentCategory { get; set; }
     public ICollection<CategoryTranslation> Translations { get; set; }
 }
+

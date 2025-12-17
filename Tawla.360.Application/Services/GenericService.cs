@@ -55,15 +55,33 @@ public class GenericService<TEntity, TCreate, TUpdate, TList, TDetails, TLite> :
         await CreateAsync(entity);
         return _mapper.Map<TDetails>(entity);
     }
+    public virtual async Task CreateRange(IEnumerable<TCreate> dtos)
+    {
+        var entities = _mapper.Map<IEnumerable<TEntity>>(dtos);
+        await _repository.AddRangeAsync(entities);
+    }
     protected virtual async Task CreateAsync(TEntity entity)
     {
         await _repository.AddAsync(entity);
     }
+    public async Task<PagingResult<TList>> GetPagedAsync(QueryRequestDto query, params Expression<Func<TEntity, object>>[] includes)
+    {
+        var lang = _httpContextAccessorService.GetAcceptedLanguage();
+        var filter = query?.FilterGroup?.BuildFilter<TEntity>(lang) ?? null;
+        var orderBy = query?.Sort?.BuildSorting<TEntity>(_httpContextAccessorService.GetAcceptedLanguage()) ?? null;
+        var pagedResult = await _repository.GetPagedAsync(query.Paging.PageNumber, query.Paging.PageSize, AndServiceFilter(filter), orderBy,includes);
+        var mappedItems = _mapper.Map<List<TList>>(pagedResult.Data);
+        return new PagingResult<TList>()
+        {
+            Data = mappedItems,
+            Count = pagedResult.Count
+        };
+    }
     public virtual async Task<PagingResult<TList>> GetPagedAsync(QueryRequestDto query)
     {
-        var lang =_httpContextAccessorService.GetAcceptedLanguage();
-        var filter = query?.FilterGroup?.BuildFilter<TEntity>(lang)??null;
-        var orderBy = query?.Sort?.BuildSorting<TEntity>(_httpContextAccessorService.GetAcceptedLanguage())??null;
+        var lang = _httpContextAccessorService.GetAcceptedLanguage();
+        var filter = query?.FilterGroup?.BuildFilter<TEntity>(lang) ?? null;
+        var orderBy = query?.Sort?.BuildSorting<TEntity>(_httpContextAccessorService.GetAcceptedLanguage()) ?? null;
         var pagedResult = await _repository.GetPagedAsync(query.Paging.PageNumber, query.Paging.PageSize, AndServiceFilter(filter), orderBy);
         var mappedItems = _mapper.Map<List<TList>>(pagedResult.Data);
         return new PagingResult<TList>()
@@ -226,4 +244,6 @@ public class GenericService<TEntity, TCreate, TUpdate, TList, TDetails, TLite> :
             return serviceFilter;
         return serviceFilter.And(filter);
     }
+
+
 }
