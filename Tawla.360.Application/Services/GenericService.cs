@@ -61,7 +61,8 @@ public class GenericService<TEntity, TCreate, TUpdate, TList, TDetails, TLite> :
     }
     public virtual async Task<PagingResult<TList>> GetPagedAsync(QueryRequestDto query)
     {
-        var filter = query?.FilterGroup?.BuildFilter<TEntity>(_httpContextAccessorService.GetAcceptedLanguage())??null;
+        var lang =_httpContextAccessorService.GetAcceptedLanguage();
+        var filter = query?.FilterGroup?.BuildFilter<TEntity>(lang)??null;
         var orderBy = query?.Sort?.BuildSorting<TEntity>(_httpContextAccessorService.GetAcceptedLanguage())??null;
         var pagedResult = await _repository.GetPagedAsync(query.Paging.PageNumber, query.Paging.PageSize, AndServiceFilter(filter), orderBy);
         var mappedItems = _mapper.Map<List<TList>>(pagedResult.Data);
