@@ -45,6 +45,7 @@ internal class CreateRestaurantCommandHandler : INotificationHandler<CreateResta
         }
         catch (Exception)
         {
+            //TODO:remove the stored file if exists 
             await _unitOfWork.Rollback();
             throw;
         }

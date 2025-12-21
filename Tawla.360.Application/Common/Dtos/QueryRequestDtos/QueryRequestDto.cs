@@ -21,5 +21,4 @@ public class QueryRequestDto
     /// Supports multiple sorting fields.
     /// </summary>
     public IEnumerable<SortModel> Sort { get; set; }
-    public object BuildFilter { get; internal set; }
 }

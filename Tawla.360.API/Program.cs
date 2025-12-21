@@ -21,7 +21,6 @@ var services = builder.Services;
 
 services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
@@ -111,7 +110,7 @@ app.UseRequestLocalization(localizationOptions);
 await using (var serviceScope = app.Services.CreateAsyncScope())
 await using (var dbContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationDbContext>())
 {
-         await dbContext.Database.MigrateAsync();
+    await dbContext.Database.MigrateAsync();
 }
 // Populate DefaultLanguageProvider cache at startup
 using (var scope = app.Services.CreateScope())
