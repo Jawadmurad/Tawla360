@@ -40,14 +40,10 @@ IConfiguration config)
     {
         var jwtSettings = _config.GetSection("JwtSettings");
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings["Key"])) ?? throw new InvalidOperationException("JWT Key is missing in configuration.");
-
-         var roleNames = await _userManager.GetRolesAsync(user);
-
+        var roleNames = await _userManager.GetRolesAsync(user);
         var roles = await _roleManager.Roles
             .Where(r => roleNames.Contains(r.Name))
             .ToListAsync();
-
-
         var claims = new List<Claim>
         {
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),

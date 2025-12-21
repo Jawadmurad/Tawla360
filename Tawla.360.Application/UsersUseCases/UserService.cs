@@ -90,7 +90,7 @@ public class UserService : HasIdGenericService<ApplicationUser, CreateUserDto, U
         if (!result.Succeeded)
         {
             var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-            throw new Exception($"Password reset failed: {errors}");
+            throw new BadRequestException($"Password reset failed: {errors}");
         }
 
         user.EmailConfirmed = true;
