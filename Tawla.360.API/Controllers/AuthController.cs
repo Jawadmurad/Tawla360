@@ -37,6 +37,11 @@ namespace Tawla._360.API.Controllers
             await _mediator.Publish(new ResetPasswordCommand(email, token, password));
             return Ok();
         }
-
+        [HttpPost("ForgetPassword")]
+        public async Task<IActionResult> ForgetPassword(string email)
+        {
+            await _mediator.Publish(new ForgetPasswordCommand(email));
+            return Ok();
+        }
     }
 }
