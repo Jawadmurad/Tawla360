@@ -96,8 +96,24 @@ public class UserService : HasIdGenericService<ApplicationUser, CreateUserDto, U
         user.EmailConfirmed = true;
         await _userManager.UpdateAsync(user);
     }
+    public async Task ForgetPassword(string email)
+    {
+        var user = await _userManager.FindByEmailAsync(email);
+        if (user == null)
+            return;
+        var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        var resetPasswordUrlBase = _configuration["EmailSettings:ResetPasswordUrl"];
+        var resetLink = $"{resetPasswordUrlBase}?token={Uri.EscapeDataString(token)}&email={Uri.EscapeDataString(user.Email)}";
+        var templatePath = Path.Combine(_env.WebRootPath, "Emails", "ResetPassword.html");
+        if (!File.Exists(templatePath))
+            throw new FileNotFoundException($"Email template not found at {templatePath}");
 
-
+        var htmlBody = await File.ReadAllTextAsync(templatePath);
+        htmlBody = htmlBody
+            .Replace("{{UserName}}", user.UserName)
+            .Replace("{{ResetLink}}", resetLink);
+        await _emailSender.SendEmailAsync(user.Email, "Set your password", htmlBody);
+    }
     public async Task CreateRestaurantAdmin(CreateRestaurantAdminDto createRestaurant, Guid restaurantId)
     {
         var user = new ApplicationUser
