@@ -77,7 +77,6 @@ IConfiguration config)
             ExpiryDate = DateTime.UtcNow.AddDays(7)
         };
         await _refreshTokenRepository.AddAsync(refreshToken);
-
         return new AuthResponse
         {
             Token = jwt,
