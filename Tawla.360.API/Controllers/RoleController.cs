@@ -1,7 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Tawla._360.Application.Common.ServicesInterfaces;
 using Tawla._360.Application.RoleUseCases.Command;
 using Tawla._360.Application.RoleUseCases.Dto;
 using Tawla._360.Application.RoleUseCases.Queries;
@@ -24,7 +23,7 @@ namespace Tawla._360.API.Controllers
             return Ok(await _mediator.Send(new GetAllRoleLiteQuery()));
         }
         [HttpPost]
-        public async Task<IActionResult> Create(CreateRoleDto createRole, [FromServices] IHttpContextAccessorService httpContextAccessorService)
+        public async Task<IActionResult> Create(CreateRoleDto createRole)
         {
             await _mediator.Publish(new CreateRoleCommand(createRole));
             return Ok();

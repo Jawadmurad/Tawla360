@@ -11,4 +11,8 @@ public record class ListRestaurantDto : IHasId
     public int NumberOfBranches { get; set; }
     public TimeOnly CloseTime { get; set; }
     public bool IsActive { get; set; }
+    public DateTime CreatedDate { get; set; }
+    public string CreatedBy { get; set; }
+    public DateTime? ModifiedDate { get; set; }
+    public string ModifiedBy { get; set; }
 }
