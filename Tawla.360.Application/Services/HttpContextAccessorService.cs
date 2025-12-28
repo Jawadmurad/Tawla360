@@ -1,10 +1,10 @@
-using System.Data.SqlClient;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using Tawla._360.Application.Common.ServicesInterfaces;
 using Tawla._360.Application.Constants;
 using Tawla._360.Domain.Enums;
+using Tawla._360.Domain.Exceptions;
 
 namespace Tawla._360.Application.Services;
 
@@ -55,12 +55,12 @@ public class HttpContextAccessorService : IHttpContextAccessorService
         return Guid.Parse(data);
     }
 
-    public Guid? GetBranchId()
+    public Guid GetBranchId()
     {
         var branchId = GetHeaderValue("branch-id");
         if (string.IsNullOrEmpty(branchId))
         {
-            return Guid.Empty;
+            throw new BadRequestException("branch id can't be null");
         }
         return Guid.Parse(branchId);
     }

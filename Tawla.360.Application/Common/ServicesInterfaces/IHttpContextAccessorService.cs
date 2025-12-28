@@ -9,6 +9,6 @@ public interface IHttpContextAccessorService
     Guid? GetRestaurantId();
     UserType GetUserType();
     Guid? GetUserId();
-    Guid? GetBranchId();
+    Guid GetBranchId();
     string GetAcceptedLanguage();
 }

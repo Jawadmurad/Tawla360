@@ -16,19 +16,19 @@ public class HasBranchService<TEntity, TCreate, TUpdate, TList, TDetails, TLite>
 {
     public HasBranchService(IHasIdRepository<TEntity> repository, IMapper mapper, IHttpContextAccessorService httpContextAccessorService) : base(repository, mapper, httpContextAccessorService)
     {
-        this.serviceFilter = PredicateBuilder.New<TEntity>(c => c.BranchId == _httpContextAccessorService.GetBranchId().Value);
+        this.serviceFilter = PredicateBuilder.New<TEntity>(c => c.BranchId == _httpContextAccessorService.GetBranchId());
     }
     public override async Task<TDetails> CreateAsync(TCreate createDto)
     {
         var entity = _mapper.Map<TEntity>(createDto);
-        entity.BranchId = _httpContextAccessorService.GetBranchId().Value;
+        entity.BranchId = _httpContextAccessorService.GetBranchId();
         await CreateAsync(entity);
         return _mapper.Map<TDetails>(entity);
     }
     public override void Update(TUpdate updateDto)
     {
         var entity = _mapper.Map<TEntity>(updateDto);
-        entity.BranchId = _httpContextAccessorService.GetBranchId().Value;
+        entity.BranchId = _httpContextAccessorService.GetBranchId();
         _repository.Update(entity);
     }
 }
