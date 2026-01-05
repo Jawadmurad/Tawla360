@@ -9,4 +9,5 @@ public record class CreateDiscountDto
     public string Name { get; set; }
     public decimal Value { get; set; }
     public AmountType AmountType { get; set; }
+    public decimal? MaxDiscountLimit { get; set; }
 }

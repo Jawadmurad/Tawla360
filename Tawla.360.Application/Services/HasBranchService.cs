@@ -25,10 +25,10 @@ public class HasBranchService<TEntity, TCreate, TUpdate, TList, TDetails, TLite>
         await CreateAsync(entity);
         return _mapper.Map<TDetails>(entity);
     }
-    public override void Update(TUpdate updateDto)
-    {
-        var entity = _mapper.Map<TEntity>(updateDto);
-        entity.BranchId = _httpContextAccessorService.GetBranchId().Value;
-        _repository.Update(entity);
-    }
+    // public override void Update(TUpdate updateDto)
+    // {
+    //     var entity = _mapper.Map<TEntity>(updateDto);
+    //     entity.BranchId = _httpContextAccessorService.GetBranchId().Value;
+    //     _repository.Update(entity);
+    // }
 }

@@ -11,4 +11,5 @@ public record class DiscountListDot:IHasId
     public string Name { get; set; }
     public decimal Value { get; set; }
     public AmountType Type { get; set; }
+    public decimal? MaxDiscountLimit { get; set; }
 }

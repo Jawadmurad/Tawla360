@@ -1,4 +1,3 @@
-using System;
 using AutoMapper;
 using Tawla._360.Application.Common.ServicesInterfaces;
 using Tawla._360.Application.Services;
@@ -8,7 +7,7 @@ using Tawla._360.Domain.Repositories;
 
 namespace Tawla._360.Application.TaxesUseCases;
 
-public class TaxService : HasRestaurantService<Tax, CreateTaxDto, UpdateTaxDto, TaxListDto, TaxDto, TaxLiteDto>,ITaxService
+public class TaxService : HasBranchService<Tax, CreateTaxDto, UpdateTaxDto, TaxListDto, TaxDto, TaxLiteDto>,ITaxService
 {
     public TaxService(IHasIdRepository<Tax> repository, IMapper mapper, IHttpContextAccessorService httpContextAccessorService) : base(repository, mapper, httpContextAccessorService)
     {
