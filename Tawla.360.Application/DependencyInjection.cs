@@ -7,6 +7,7 @@ using Tawla._360.Application.DisCountUseCases;
 using Tawla._360.Application.RestaurantUseCases;
 using Tawla._360.Application.RoleUseCases;
 using Tawla._360.Application.Services;
+using Tawla._360.Application.SurchargeUseCase;
 using Tawla._360.Application.TaxesUseCases;
 using Tawla._360.Application.UsersUseCases;
 
@@ -28,6 +29,7 @@ public static class DependencyInjection
         services.AddScoped<ITaxService, TaxService>();
         services.AddScoped<IDiscountService, DiscountService>();
         services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<ISurchargeService,SurchargeService>();
         return services;
     }
 }

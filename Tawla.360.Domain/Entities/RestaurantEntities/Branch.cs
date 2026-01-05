@@ -7,5 +7,4 @@ public class Branch : BaseRestaurantEntity
 {
     public int Number { get; set; }
     public string Location { get; set; }
-    // public ICollection<BranchTax> BranchTaxes { get; set; }
 }

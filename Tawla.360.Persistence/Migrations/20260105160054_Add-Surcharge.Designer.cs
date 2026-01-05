@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Tawla._360.Persistence.DbContexts;
@@ -11,9 +12,11 @@ using Tawla._360.Persistence.DbContexts;
 namespace Tawla._360.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260105160054_Add-Surcharge")]
+    partial class AddSurcharge
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -276,43 +279,6 @@ namespace Tawla._360.Persistence.Migrations
                     b.HasIndex("BranchId");
 
                     b.ToTable("Surcharges");
-                });
-
-            modelBuilder.Entity("Tawla._360.Domain.Entities.Settings.Tax", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("numeric");
-
-                    b.Property<Guid>("BranchId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsVat")
-                        .HasColumnType("boolean");
-
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("text");
-
-                    b.Property<DateTime?>("ModifiedDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BranchId");
-
-                    b.ToTable("Taxes");
                 });
 
             modelBuilder.Entity("Tawla._360.Domain.Entities.UsersEntities.ApplicationRole", b =>
@@ -632,42 +598,6 @@ namespace Tawla._360.Persistence.Migrations
 
                             b1.WithOwner()
                                 .HasForeignKey("SurchargeId");
-                        });
-
-                    b.Navigation("Branch");
-
-                    b.Navigation("Translations");
-                });
-
-            modelBuilder.Entity("Tawla._360.Domain.Entities.Settings.Tax", b =>
-                {
-                    b.HasOne("Tawla._360.Domain.Entities.RestaurantEntities.Branch", "Branch")
-                        .WithMany()
-                        .HasForeignKey("BranchId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.OwnsMany("Tawla._360.Domain.Entities.Settings.TaxTranslation", "Translations", b1 =>
-                        {
-                            b1.Property<Guid>("TaxId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<string>("PropertyName")
-                                .HasColumnType("text");
-
-                            b1.Property<string>("LanguageCode")
-                                .HasColumnType("text");
-
-                            b1.Property<string>("Value")
-                                .IsRequired()
-                                .HasColumnType("text");
-
-                            b1.HasKey("TaxId", "PropertyName", "LanguageCode");
-
-                            b1.ToTable("TaxTranslations", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("TaxId");
                         });
 
                     b.Navigation("Branch");

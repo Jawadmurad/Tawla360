@@ -20,6 +20,7 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<Restaurant> Restaurants { get; set; }
     public DbSet<Branch> Branches { get; set; }
     public DbSet<RefreshToken> RefreshTokens { get; set; }
-    // public DbSet<Tax> Taxes { get; set; }
+    public DbSet<Tax> Taxes { get; set; }
     public DbSet<Discount> Discounts { get; set; }
+    public DbSet<Surcharge> Surcharges { get; set; }
 }

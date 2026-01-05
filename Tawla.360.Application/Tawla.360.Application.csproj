@@ -21,6 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="SurchargeUseCase/Command/" />
+    <Folder Include="SurchargeUseCase/Dto/" />
     <Folder Include="UsersUseCases/Query/" />
   </ItemGroup>
 

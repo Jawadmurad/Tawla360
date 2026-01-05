@@ -1,0 +1,15 @@
+using Tawla._360.Application.Attributes;
+using Tawla._360.Domain.Enums;
+
+namespace Tawla._360.Application.SurchargeUseCase.Dto;
+
+public record class SurchargeListDto
+{
+    public Guid Id { get; set; }
+    [Translatable]
+    public string Name { get; set; }
+    public AmountType AmountType { get; set; }
+    public decimal Amount { get; set; }
+    public bool IsTaxable { get; set; }
+
+}

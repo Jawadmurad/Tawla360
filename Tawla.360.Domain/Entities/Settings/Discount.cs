@@ -8,5 +8,6 @@ public class Discount:BaseBranchEntity,ITranslatedEntity<DiscountTranslation>
 {
     public decimal Value { get; set; }
     public AmountType Type { get; set; }
+    public decimal? MaxDiscountLimit { get; set; }
     public ICollection<DiscountTranslation> Translations { get; set; }
 }
