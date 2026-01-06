@@ -14,8 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ItemUseCases/Handlers/" />
-    <Folder Include="ItemUseCases/Handlers/CommandHandlers/" />
+    <Folder Include="ItemUseCases/Dtos/Common/" />
+    <Folder Include="ItemUseCases/Dtos/UpdateItemDtos/" />
     <Folder Include="ItemUseCases/Handlers/QueryHandlers/" />
     <Folder Include="ItemUseCases/Query/" />
   </ItemGroup>

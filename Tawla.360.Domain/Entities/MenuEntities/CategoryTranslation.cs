@@ -5,6 +5,4 @@ namespace Tawla._360.Domain.Entities.MenuEntities;
 
 public class CategoryTranslation:EntityTranslation
 {
-    public Guid CategoryId { get; set; }
-    public Category Category { get; set; }
 }

@@ -26,6 +26,10 @@ internal class Repository<T>(ApplicationDbContext context) : IRepository<T> wher
         _dbSet.Remove(entity);
 
     }
+    public void DeleteRange(IEnumerable<T> entities)
+    {
+        _dbSet.RemoveRange(entities);
+    }
     public Task DeleteWithSaveAsync(T entity)
     {
         _dbSet.Remove(entity);
@@ -212,5 +216,13 @@ internal class Repository<T>(ApplicationDbContext context) : IRepository<T> wher
         await _context.SaveChangesAsync();
     }
 
-    
+    public Task AddRangeAsync(IEnumerable<T> entities)
+    {
+        return _dbSet.AddRangeAsync(entities);
+    }
+
+    public void AddRange(IEnumerable<T> entities)
+    {
+        _dbSet.AddRange(entities);
+    }
 }

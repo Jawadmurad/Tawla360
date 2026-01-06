@@ -5,6 +5,4 @@ namespace Tawla._360.Domain.Entities.MenuEntities;
 
 public class ItemTranslation:EntityTranslation
 {
-    public Guid ItemId { get; set; }
-    public Item Item { get; set; }
 }

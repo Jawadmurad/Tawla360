@@ -12,12 +12,14 @@ public interface IGenericService<TEntity, TCreate, TUpdate, TList, TDetails, TLi
     where TDetails : class
     where TLite : class
 {
+    Task<PagingResult<TList>> GetPagedAsync(QueryRequestDto query,params Expression<Func<TEntity, object>>[] includes);
     Task<PagingResult<TList>> GetPagedAsync(QueryRequestDto query);
     Task<IReadOnlyList<TList>> GetAllAsync();
 
     Task<IReadOnlyList<TLite>> GetLiteAsync(Expression<Func<TEntity, bool>> filter = null);
 
     Task<TDetails> CreateAsync(TCreate createDto);
+    Task CreateRange(IEnumerable<TCreate> dtos);
     void Update(TUpdate updateDto);
 
     Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter);

@@ -12,6 +12,10 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="TypeConfiguration/CategoryEntityConfiguration/" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <RootNamespace>Tawla._360.Persistence</RootNamespace>

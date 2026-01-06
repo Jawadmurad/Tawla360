@@ -21,5 +21,8 @@ public abstract class TranslatedEntityProfile<TEntity, TTranslation, TCreate, TU
 
         CreateMap<TEntity, TList>()
          .AfterMap<TranslationToValueResolver<TEntity, TTranslation, TList>>();
+        CreateMap<TEntity, TLite>()
+        .AfterMap<TranslationToValueResolver<TEntity, TTranslation, TLite>>();
+
     }
 }

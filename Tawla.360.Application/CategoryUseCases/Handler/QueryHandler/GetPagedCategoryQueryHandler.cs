@@ -9,6 +9,10 @@ namespace Tawla._360.Application.CategoryUseCases.Handler.QueryHandler;
 public class GetPagedCategoryQueryHandler : IRequestHandler<GetCategoryPagedQuery, PagingResult<CategoryListDto>>
 {
     private readonly ICategoryService _categoryService;
+    public GetPagedCategoryQueryHandler(ICategoryService categoryService)
+    {
+        _categoryService=categoryService;
+    }
     public Task<PagingResult<CategoryListDto>> Handle(GetCategoryPagedQuery request, CancellationToken cancellationToken)
     {
         return _categoryService.GetPagedAsync(request.Query);

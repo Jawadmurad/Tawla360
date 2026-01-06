@@ -9,6 +9,11 @@ public class CreateCategoryCommandHandler : INotificationHandler<CreateCategoryC
 {
     private readonly ICategoryService _categoryService;
     private readonly IUnitOfWork _unitOfWork;
+    public CreateCategoryCommandHandler(ICategoryService categoryService,IUnitOfWork unitOfWork)
+    {
+        _categoryService=categoryService;
+        _unitOfWork=unitOfWork;
+    }
     public async Task Handle(CreateCategoryCommand notification, CancellationToken cancellationToken)
     {
         await _categoryService.CreateAsync(notification.CreateCategory);

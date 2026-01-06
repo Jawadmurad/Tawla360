@@ -33,11 +33,15 @@ public interface IRepository<T> where T : class, new()
         params Expression<Func<T, object>>[] includes);
 
     Task AddAsync(T entity);
+
     void Add(T entity);
+    Task AddRangeAsync(IEnumerable<T> entities);
+    void AddRange(IEnumerable<T> entities);
     Task AddWithSave(T entity);
     Task Reload(T entity);
     void Update(T entity);
     void Delete(T entity);
+    void DeleteRange(IEnumerable<T> entities);
     Task DeleteWithSaveAsync(T entity);
 
     Task<IReadOnlyList<TResult>> Select<TResult>(
@@ -63,5 +67,5 @@ public interface IRepository<T> where T : class, new()
     Task<T> FirstOrDefaultAsync(
         Expression<Func<T, bool>> filter,
         string includes = null);
-    
+
 }

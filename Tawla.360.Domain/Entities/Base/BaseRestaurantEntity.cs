@@ -1,4 +1,3 @@
-using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using Tawla._360.Domain.Entities.RestaurantEntities;
 using Tawla._360.Domain.Interfaces.Entities;
