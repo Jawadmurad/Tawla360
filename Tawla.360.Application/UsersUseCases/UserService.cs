@@ -144,7 +144,7 @@ public class UserService : HasIdGenericService<ApplicationUser, CreateUserDto, U
             .Replace("{{UserName}}", user.UserName)
             .Replace("{{ResetLink}}", resetLink);
             System.Console.WriteLine("sending email");
-        await _emailSender.SendEmailAsync(user.Email, "Set your password", htmlBody);
+        //await _emailSender.SendEmailAsync(user.Email, "Set your password", htmlBody);
         System.Console.WriteLine("email sent");
 
     }
