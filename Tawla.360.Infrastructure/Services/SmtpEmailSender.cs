@@ -17,7 +17,12 @@ public class SmtpEmailSender : IEmailSender
     public async Task SendEmailAsync(string email, string subject, string htmlMessage)
     {
         var smtpSection = _configuration.GetSection("SmtpSettings");
-
+        System.Console.WriteLine($"smtp host {smtpSection["Host"]}");
+        System.Console.WriteLine($"smtp port {smtpSection["Port"]}");
+        System.Console.WriteLine($"smtp username {smtpSection["Username"]}");
+        System.Console.WriteLine($"smtp pass {smtpSection["Password"]}");
+        System.Console.WriteLine($"smtp EnableSsl {smtpSection["EnableSsl"]}");
+        System.Console.WriteLine($"To {email}");
         var smtpClient = new SmtpClient(smtpSection["Host"], int.Parse(smtpSection["Port"]))
         {
             Credentials = new NetworkCredential(smtpSection["Username"], smtpSection["Password"]),
