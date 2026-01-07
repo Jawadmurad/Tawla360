@@ -1,0 +1,70 @@
+services:
+  tawla-api:
+    image: tawla-360-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+      network: host
+    container_name: tawla-api-container
+    ports:
+      - "5000:8080"
+    environment:
+      # --- System Settings ---
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:8080
+      - AllowedHosts=*
+
+      # --- Connection Strings ---
+      # IMPORTANT: Host is 'tawla-db', not 'localhost'
+      # I pointed both to 'tawla_db' so they work out of the box.
+      - ConnectionStrings__DefaultConnection=Server=tawla-db;Port=5432;Database=tawla_db;User Id=postgres;Password=postgres;Pooling=true;
+      - ConnectionStrings__LoggingConnection=Server=tawla-db;Port=5432;Database=tawla_db;User Id=postgres;Password=postgres;Pooling=true;
+
+      # --- Logging Settings ---
+      - Logging__LogLevel__Default=Information
+      - Logging__LogLevel__Microsoft.AspNetCore=Warning
+
+      # --- SMTP (Email) Settings ---
+      - SmtpSettings__Host=smtp.gmail.com
+      - SmtpSettings__Port=587
+      - SmtpSettings__EnableSsl=true
+      - SmtpSettings__Username=Noreply.tawla360@gmail.com
+      - SmtpSettings__Password=hiopjaruqtchxpuh
+      - SmtpSettings__From=Noreply.tawla360@gmail.com
+
+      # --- Other App Settings ---
+      - EmailSettings__ResetPasswordUrl=https://myfrontend.com/reset-password
+  
+      # --- JWT Settings ---
+      - JwtSettings__Issuer=tawla360
+      - JwtSettings__Audience=tawla360Users
+      - JwtSettings__DurationInMinutes=60
+      - JwtSettings__Key=MySuperSecretKeyThatIsAtLeast32CharsLong123dvdc
+
+
+    depends_on:
+      - tawla-db
+    networks:
+      - tawla-network
+
+  # Postgres Database
+  tawla-db:
+    image: postgres:15-alpine
+    container_name: tawla-db-container
+    environment:
+      - POSTGRES_DB=tawla_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - tawla-network
+
+volumes:
+  postgres_data:
+
+networks:
+  tawla-network:
+    driver: bridge
