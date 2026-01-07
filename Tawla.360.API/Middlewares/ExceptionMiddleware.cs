@@ -42,7 +42,13 @@ public class ExceptionMiddleware
             // Restore the original stream before handling the exception
             context.Response.Body = originalBodyStream;
             _logger.LogError(ex, "An unhandled exception occurred");
-            await HandleException(context, StatusCodes.Status500InternalServerError, "An internal server error occurred", ex);
+            var message= ex.Message;
+            if (ex.InnerException != null)
+            {
+                message+=Environment.NewLine;
+                message+=ex.InnerException.Message;
+            }
+            await HandleException(context, StatusCodes.Status500InternalServerError, message, ex);
         }
     }
 
