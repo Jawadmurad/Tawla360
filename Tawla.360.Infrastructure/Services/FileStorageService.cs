@@ -11,11 +11,13 @@ public class FileStorageService : IFileStorageService
 
     public FileStorageService(IHostEnvironment env)
     {
+        System.Console.WriteLine("file storage service constructed ");
         // Store the web root path for resolving full paths later
         _wwwRootPath = Path.Combine(env.ContentRootPath, "wwwroot");
-
+        System.Console.WriteLine("base bath getting  ");
         // The base path for saving new files
         _basePath = Path.Combine(_wwwRootPath, "uploads");
+        System.Console.WriteLine($"base bath is {_basePath}  ");
     }
 
     public Task DeleteFileAsync(string path)

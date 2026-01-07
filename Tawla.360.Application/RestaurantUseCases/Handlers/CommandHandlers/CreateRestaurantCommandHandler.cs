@@ -25,11 +25,14 @@ internal class CreateRestaurantCommandHandler : INotificationHandler<CreateResta
         var filePath = string.Empty;
         if (file != null)
         {
+            System.Console.WriteLine("try saving image");
             filePath = await _fileStorageService.SaveFileAsync(file, nameof(Domain.Entities.RestaurantEntities.Restaurant));
         }
         await _unitOfWork.BeginTransactionAsync();
+        System.Console.WriteLine("begin transaction");
         try
         {
+            System.Console.WriteLine("try create the restaurant ");
             var restaurant = await _restaurantService.CreateAsync(new()
             {
                 Description = notification.CreateRestaurantWithAdminDto.Description,
@@ -39,7 +42,9 @@ internal class CreateRestaurantCommandHandler : INotificationHandler<CreateResta
                 InsertionDefaultLanguage = notification.CreateRestaurantWithAdminDto.InsertionDefaultLanguage,
                 NumberOfBranches = notification.CreateRestaurantWithAdminDto.NumberOfBranches,
             });
+            System.Console.WriteLine("try to create the admin ");
             await _userService.CreateRestaurantAdmin(notification.CreateRestaurantWithAdminDto.Admin, restaurant.Id);
+            System.Console.WriteLine("try to save the changes");
             await _unitOfWork.SaveChangesAsync();
             await _unitOfWork.CommitAsync();
         }

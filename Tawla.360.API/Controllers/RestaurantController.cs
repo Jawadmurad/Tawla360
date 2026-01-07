@@ -19,6 +19,7 @@ public class RestaurantController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromForm] CreateRestaurantWithAdmin createRestaurantWith)
     {
+        System.Console.WriteLine("request reached to the endponit");
         await _mediator.Publish(new CreateRestaurantCommand(createRestaurantWith));
         return Ok();
     }

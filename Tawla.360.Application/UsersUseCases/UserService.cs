@@ -116,6 +116,7 @@ public class UserService : HasIdGenericService<ApplicationUser, CreateUserDto, U
     }
     public async Task CreateRestaurantAdmin(CreateRestaurantAdminDto createRestaurant, Guid restaurantId)
     {
+        
         var user = new ApplicationUser
         {
             UserName = createRestaurant.Email,
@@ -125,20 +126,26 @@ public class UserService : HasIdGenericService<ApplicationUser, CreateUserDto, U
             FirstName = createRestaurant.FirstName,
             LastName = createRestaurant.LastName,
         };
+        System.Console.WriteLine("try to add to user manager");
         await _userManager.CreateAsync(user);
+        System.Console.WriteLine("generate the token");
         var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+        System.Console.WriteLine($"the token is {token}");
         System.Console.WriteLine(token);
         var resetPasswordUrlBase = _configuration["EmailSettings:ResetPasswordUrl"];
+        System.Console.WriteLine($"reset pass url {resetPasswordUrlBase}");
         var resetLink = $"{resetPasswordUrlBase}?token={Uri.EscapeDataString(token)}&email={Uri.EscapeDataString(user.Email)}";
         var templatePath = Path.Combine(_env.WebRootPath, "Emails", "ResetPassword.html");
+        
         if (!File.Exists(templatePath))
             throw new FileNotFoundException($"Email template not found at {templatePath}");
-
         var htmlBody = await File.ReadAllTextAsync(templatePath);
         htmlBody = htmlBody
             .Replace("{{UserName}}", user.UserName)
             .Replace("{{ResetLink}}", resetLink);
+            System.Console.WriteLine("sending email");
         await _emailSender.SendEmailAsync(user.Email, "Set your password", htmlBody);
+        System.Console.WriteLine("email sent");
 
     }
 
