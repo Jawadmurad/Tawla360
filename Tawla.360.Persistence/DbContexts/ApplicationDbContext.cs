@@ -30,4 +30,5 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser, Applicati
     public DbSet<ItemPrice> ItemPrices { get; set; }
     public DbSet<ModifierGroup> ModifierGroups { get; set; }
     public DbSet<ModifierOption> ModifierOptions { get; set; }
+    public DbSet<Supplier> Suppliers { get; set; }
 }
