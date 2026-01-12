@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Tawla._360.Application.Common.Dtos.QueryRequestDtos;
 using Tawla._360.Application.ModifierUseCases.Command;
 using Tawla._360.Application.ModifierUseCases.Dto;
 using Tawla._360.Application.ModifierUseCases.Query;
@@ -22,6 +23,11 @@ namespace Tawla._360.API.Controllers
         {
             await _mediator.Publish(new CreateModifierCommand(createModifier));
             return Ok();
+        }
+        [HttpPost("GetPage")]
+        public async Task<IActionResult> GetPage(QueryRequestDto query)
+        {
+            return Ok(await _mediator.Send(new GetModifierPagedQuery(query)));
         }
         [HttpDelete("{id}:guid")]
         public async Task<IActionResult> Delete(Guid id)
