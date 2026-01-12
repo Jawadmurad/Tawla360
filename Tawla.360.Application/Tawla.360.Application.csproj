@@ -21,6 +21,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="MeasurementUnitUserCases/" />
+    <Folder Include="MeasurementUnitUserCases/Commands/" />
+    <Folder Include="MeasurementUnitUserCases/Dtos/" />
+    <Folder Include="MeasurementUnitUserCases/Handlers/" />
+    <Folder Include="MeasurementUnitUserCases/Handlers/CommandHandlers/" />
+    <Folder Include="MeasurementUnitUserCases/Handlers/QueryHandlers/" />
+    <Folder Include="MeasurementUnitUserCases/Queries/" />
     <Folder Include="SupplierUseCases/" />
     <Folder Include="SupplierUseCases/Commands/" />
     <Folder Include="SupplierUseCases/Dto/" />
