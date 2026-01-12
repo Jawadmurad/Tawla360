@@ -7,4 +7,6 @@ public record class LiteCategoryDto
     public Guid Id { get; set; }
     [Translatable]
     public string Name { get; set; }   
+
+    public string HexColor { get; set; }
 }

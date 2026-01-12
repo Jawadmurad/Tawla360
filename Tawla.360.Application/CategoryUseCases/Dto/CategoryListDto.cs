@@ -9,4 +9,5 @@ public record CategoryListDto:IHasId
     [Translatable]
     public string Name { get; set; }
     public string HexColor { get; set; }
+    public LiteCategoryDto Parent { get; set; }
 }

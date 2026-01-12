@@ -7,5 +7,8 @@ namespace Tawla._360.Application.CategoryUseCases;
 
 public class CategoryProfile:TranslatedEntityProfile<Category,CategoryTranslation,CreateCategoryDto,UpdateCategoryDto,CategoryListDto,CategoryDto,LiteCategoryDto>
 {
-
+    public CategoryProfile()
+    {
+        CreateMap<Category,CategoryListDto>();
+    }
 }
