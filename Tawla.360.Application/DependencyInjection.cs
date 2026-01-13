@@ -15,6 +15,7 @@ using Tawla._360.Application.SurchargeUseCase;
 using Tawla._360.Application.TaxesUseCases;
 using Tawla._360.Application.UsersUseCases;
 using Tawla._360.Application.SupplierUseCases;
+using Tawla._360.Application.MeasurementUnitUserCases;
 
 namespace Tawla._360.Application;
 
@@ -41,6 +42,7 @@ public static class DependencyInjection
         services.AddScoped<IModifierGroupService,ModifierGroupService>();
         services.AddScoped<ISurchargeService,SurchargeService>();
         services.AddScoped<ISupplierService,SupplierService>();
+        services.AddScoped<IMeasurementUnitService,MeasurementUnitService>();
         return services;
     }
 }
