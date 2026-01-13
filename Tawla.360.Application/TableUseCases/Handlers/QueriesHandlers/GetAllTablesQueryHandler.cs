@@ -5,10 +5,17 @@ using Tawla._360.Application.TableUseCases.Queries;
 
 namespace Tawla._360.Application.TableUseCases.Handlers.QueriesHandlers;
 
-public class GetAllTablesQueryHandler : IRequestHandler<GetAllTablesQuery, IEnumerable<TableDto>>
+public class GetAllTablesQueryHandler : IRequestHandler<GetAllTablesQuery, IReadOnlyList<TableDto>>
 {
-    public Task<IEnumerable<TableDto>> Handle(GetAllTablesQuery request, CancellationToken cancellationToken)
+    private readonly ITableService _tableService;
+
+    public GetAllTablesQueryHandler(ITableService tableService)
     {
-        throw new NotImplementedException();
+        _tableService = tableService;
+    }
+
+    public Task<IReadOnlyList<TableDto>> Handle(GetAllTablesQuery request, CancellationToken cancellationToken)
+    {
+        return _tableService.GetAllAsync();
     }
 }
