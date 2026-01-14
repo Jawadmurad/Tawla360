@@ -1,7 +1,6 @@
 using MediatR;
 using Tawla._360.Application.CategoryUseCases.Dto;
 using Tawla._360.Application.CategoryUseCases.Queries;
-using Tawla._360.Domain.Entities.MenuEntities;
 using Tawla._360.Shared;
 
 namespace Tawla._360.Application.CategoryUseCases.Handler.QueryHandler;

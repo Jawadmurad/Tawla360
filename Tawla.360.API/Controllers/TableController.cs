@@ -1,5 +1,6 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Tawla._360.Application.Common.Dtos.QueryRequestDtos;
 using Tawla._360.Application.TableUseCases.Commands;
 using Tawla._360.Application.TableUseCases.Dtos;
 using Tawla._360.Application.TableUseCases.Queries;
@@ -25,6 +26,11 @@ namespace Tawla._360.API.Controllers
         public async Task<IActionResult> Get()
         {
             return Ok(await _mediator.Send(new GetAllTablesQuery()));
+        }
+        [HttpPost("GetPage")]
+        public async Task<IActionResult> GetPage(QueryRequestDto query)
+        {
+            return Ok(await _mediator.Send(new GetTablePagedQuery(query)));
         }
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
