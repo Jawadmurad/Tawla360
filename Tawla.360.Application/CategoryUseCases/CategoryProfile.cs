@@ -1,4 +1,3 @@
-using System;
 using Tawla._360.Application.CategoryUseCases.Dto;
 using Tawla._360.Application.Common.CommonMapperProfile;
 using Tawla._360.Domain.Entities.MenuEntities;
@@ -9,6 +8,5 @@ public class CategoryProfile:TranslatedEntityProfile<Category,CategoryTranslatio
 {
     public CategoryProfile()
     {
-        CreateMap<Category,CategoryListDto>();
     }
 }
